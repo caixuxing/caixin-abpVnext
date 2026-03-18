@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Framework\CaiXin.Application.Contracts\CaiXin.Application.Contracts.csproj" />
+    <ProjectReference Include="..\CaiXin.NiuMa.Domain.Shared\CaiXin.NiuMa.Domain.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="MemberApp\Dto\" />
+    <Folder Include="MemberApp\Qry\" />
+  </ItemGroup>
+
+</Project>

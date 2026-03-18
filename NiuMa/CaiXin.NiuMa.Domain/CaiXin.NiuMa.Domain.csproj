@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Framework\CaiXin.Domain\CaiXin.Domain.csproj" />
+    <ProjectReference Include="..\CaiXin.NiuMa.Domain.Shared\CaiXin.NiuMa.Domain.Shared.csproj" />
+  </ItemGroup>
+
+</Project>
