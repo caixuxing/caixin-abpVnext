@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36203.30 d17.14
+VisualStudioVersion = 17.14.36203.30
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
@@ -32,6 +32,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{02D3A65E-19EE-4590-ABF9-CFEE06E1ED70}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaiXin.NiuMa.Domain.Shared", "NiuMa\CaiXin.NiuMa.Domain.Shared\CaiXin.NiuMa.Domain.Shared.csproj", "{BA45ACC7-F983-4284-9220-C79058319DDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaiXin.NiuMa.WebBlazor", "NiuMa\CaiXin.NiuMa.WebBlazor\CaiXin.NiuMa.WebBlazor.csproj", "{735AEFE1-14FB-4133-B931-960129A48AE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaiXin.DbMigrator", "Framework\CaiXin.DbMigrator\CaiXin.DbMigrator.csproj", "{6D6CD06B-F673-44C1-87EC-C1B68BCF1BAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaiXin.NiuMa.DbMigrator", "NiuMa\CaiXin.NiuMa.DbMigrator\CaiXin.NiuMa.DbMigrator.csproj", "{CF15742F-5558-421B-81C1-2A5DD4344766}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +85,18 @@ Global
 		{BA45ACC7-F983-4284-9220-C79058319DDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA45ACC7-F983-4284-9220-C79058319DDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA45ACC7-F983-4284-9220-C79058319DDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{735AEFE1-14FB-4133-B931-960129A48AE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{735AEFE1-14FB-4133-B931-960129A48AE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{735AEFE1-14FB-4133-B931-960129A48AE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{735AEFE1-14FB-4133-B931-960129A48AE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D6CD06B-F673-44C1-87EC-C1B68BCF1BAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D6CD06B-F673-44C1-87EC-C1B68BCF1BAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D6CD06B-F673-44C1-87EC-C1B68BCF1BAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D6CD06B-F673-44C1-87EC-C1B68BCF1BAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF15742F-5558-421B-81C1-2A5DD4344766}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF15742F-5558-421B-81C1-2A5DD4344766}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF15742F-5558-421B-81C1-2A5DD4344766}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF15742F-5558-421B-81C1-2A5DD4344766}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +112,9 @@ Global
 		{D8B74A11-4CB4-43E0-B50D-2E74736FC06F} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{0D9DA736-ADB7-451F-9C51-85C311538CD1} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{BA45ACC7-F983-4284-9220-C79058319DDD} = {3023BE17-4551-4087-BEB0-87E2143D784C}
+		{735AEFE1-14FB-4133-B931-960129A48AE1} = {3023BE17-4551-4087-BEB0-87E2143D784C}
+		{6D6CD06B-F673-44C1-87EC-C1B68BCF1BAD} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{CF15742F-5558-421B-81C1-2A5DD4344766} = {3023BE17-4551-4087-BEB0-87E2143D784C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E644E46F-4706-4479-B3A6-2F11F6C0AD04}

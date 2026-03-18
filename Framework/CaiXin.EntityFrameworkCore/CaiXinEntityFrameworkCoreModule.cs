@@ -1,11 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.SqlServer;
@@ -13,7 +7,10 @@ using Volo.Abp.Modularity;
 
 namespace CaiXin.EntityFrameworkCore
 {
-    [DependsOn(typeof(AbpEntityFrameworkCoreSqlServerModule)
+    [DependsOn(
+         typeof(AbpEntityFrameworkCoreModule),
+        typeof(AbpEntityFrameworkCoreSqlServerModule)
+
            )]
     public class CaiXinEntityFrameworkCoreModule : AbpModule
     {
@@ -26,40 +23,9 @@ namespace CaiXin.EntityFrameworkCore
             // AbpDbContextOptions 是ABP用来统一管理所有DbContext配置的选项类
             Configure<AbpDbContextOptions>(options =>
             {
-                // 使用Configure方法配置所有的DbContext
-                // 这里的configurationContext 实际上是 DbContextOptionsBuilder 类型
-                // 这个配置会被应用到应用程序中的所有DbContext（包括CaiXinContext和其他可能的DbContext）
-                options.Configure(configurationContext =>
-                {
-                    // 配置使用SQL Server数据库
-                    // 不需要显式传入连接字符串，ABP会自动从配置文件的"ConnectionStrings.Default"读取
-                    // UseSqlServer() 是Entity Framework Core提供的扩展方法，用于配置数据库提供程序
-                    configurationContext.UseSqlServer();
 
-                    // 如果需要更详细的配置，可以这样写：
-                    // configurationContext.UseSqlServer(sqlOptions =>
-                    // {
-                    //     // 设置命令超时时间为60秒
-                    //     sqlOptions.CommandTimeout(60);
-                    //     // 设置迁移历史表名称
-                    //     sqlOptions.MigrationsHistoryTable("__MyMigrationsHistory");
-                    //     // 启用失败重试机制（适用于临时性故障）
-                    //     sqlOptions.EnableRetryOnFailure(
-                    //         maxRetryCount: 3,               // 最大重试次数
-                    //         maxRetryDelay: TimeSpan.FromSeconds(30), // 最大重试延迟时间
-                    //         errorNumbersToAdd: null);        // 要额外处理的错误号
-                    // });
-                });
+                options.UseSqlServer();
 
-                // 也可以为特定的DbContext单独配置（取消下面的注释可以看到示例）
-                // options.Configure<CaiXinContext>(c =>
-                // {
-                //     c.UseSqlServer(sqlOptions =>
-                //     {
-                //         // 为CaiXinContext设置特定的架构
-                //         sqlOptions.MigrationsHistoryTable("__CaiXin_Migrations", "caixin");
-                //     });
-                // });
             });
 
             // 向依赖注入容器注册CaiXinContext（ABP风格的DbContext注册方式）
