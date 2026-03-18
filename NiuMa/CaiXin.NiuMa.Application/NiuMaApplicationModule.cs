@@ -10,7 +10,7 @@ namespace CaiXin.NiuMa.Application
       typeof(NiuMaApplicationContractsModule),
       typeof(NiuMaDomainModule)
     )]
-    public class CaiXinNiuMaApplicationModule : AbpModule
+    public class NiuMaApplicationModule : AbpModule
     {
     }
 }

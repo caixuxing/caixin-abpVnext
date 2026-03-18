@@ -2,16 +2,13 @@
 
 namespace CaiXin.NiuMa.Domain.Member;
 
-public class User : IEntity<Guid>
+public class User : AggregateRoot<Guid>
 {
-    public int Id { get; set; }
+    public string Name { get; set; } = default!;
 
-    Guid IEntity<Guid>.Id => throw new NotImplementedException();
+    public string Password { get; set; } = default!;
 
-    public object?[] GetKeys()
-    {
-        throw new NotImplementedException();
-    }
+    public string Salt { get; set; } = default!;
 
     public static User Cteate()
     {
