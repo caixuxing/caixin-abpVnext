@@ -7,7 +7,6 @@ using Mapster;
 using Microsoft.Extensions.Logging;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Repositories;
-using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EventBus.Local;
 using Volo.Abp.Uow;
 
@@ -23,7 +22,7 @@ namespace CaiXin.NiuMa.Application.MemberApp
 
         private ILocalEventBus LocalEventBus => LazyServiceProvider.LazyGetRequiredService<ILocalEventBus>();
 
-        private IRepository<User> UserRepo => LazyServiceProvider.LazyGetRequiredService<IRepository<User>>();
+        private IRepository<User, Guid> UserRepo => LazyServiceProvider.LazyGetRequiredService<IRepository<User, Guid>>();
 
         [UnitOfWork]
         public async Task<ApiResult<string>> MemberRegistrationAsync(MemberRegistrationDto cmd, CancellationToken token)
