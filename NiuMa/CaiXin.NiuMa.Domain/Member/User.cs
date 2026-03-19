@@ -2,7 +2,7 @@
 
 namespace CaiXin.NiuMa.Domain.Member;
 
-public class User : AggregateRoot<Guid>
+public class User : Entity<Guid>
 {
     public string Name { get; set; } = default!;
 

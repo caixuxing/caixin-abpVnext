@@ -1,12 +1,13 @@
 ﻿using CaiXin.EntityFrameworkCore;
 using CaiXin.NiuMa.Domain.Member;
 using Microsoft.EntityFrameworkCore;
+using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 
 namespace CaiXin.NiuMa.Infrastructure.Repository
 {
-    public class UserRepository : EfCoreRepository<CaiXinContext, User, Guid>, IUserRepository
+    public class UserRepository : EfCoreRepository<CaiXinContext, User, Guid>, IUserRepository, ITransientDependency
     {
         public UserRepository(IDbContextProvider<CaiXinContext> dbContextProvider) : base(dbContextProvider)
         {
