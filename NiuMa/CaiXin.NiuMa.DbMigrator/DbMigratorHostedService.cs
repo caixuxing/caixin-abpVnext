@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CaiXin.NiuMa.Domain.DataSeed;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Volo.Abp;
@@ -36,7 +37,10 @@ namespace CaiXin.NiuMa.DbMigrator
 
             await application.InitializeAsync();
 
-            //  await application.ServiceProvider.GetKeyedServices<DbMigratorHostedService>();
+            await application
+                .ServiceProvider
+                .GetRequiredService<NiuMaDbMigrationService>()
+                .MigrateAsync();
 
             await application.ShutdownAsync();
 

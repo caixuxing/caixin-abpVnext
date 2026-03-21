@@ -10,8 +10,19 @@ public class User : Entity<Guid>
 
     public string Salt { get; set; } = default!;
 
-    public static User Cteate()
+    /// <summary>
+    /// 创建用户
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="pwd"></param>
+    /// <param name="salt"></param>
+    /// <returns></returns>
+    public User Cteate(Guid guid, string name, string pwd, string salt)
     {
-        return new User();
+        this.Id = guid;
+        this.Name = name;
+        this.Password = pwd;
+        this.Salt = salt;
+        return this;
     }
 }
