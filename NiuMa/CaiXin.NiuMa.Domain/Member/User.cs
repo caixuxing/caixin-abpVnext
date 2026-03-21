@@ -23,6 +23,7 @@ public class User : Entity<Guid>
         this.Name = name;
         this.Password = pwd;
         this.Salt = salt;
+
         return this;
     }
 }

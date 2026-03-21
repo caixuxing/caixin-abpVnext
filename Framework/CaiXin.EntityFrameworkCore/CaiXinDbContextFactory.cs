@@ -1,12 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CaiXin.EntityFrameworkCore
 {
@@ -18,7 +13,7 @@ namespace CaiXin.EntityFrameworkCore
 
             var builder = new DbContextOptionsBuilder<CaiXinContext>()
                 .UseSqlServer(
-                configuration.GetConnectionString("ConnectionString"),
+                configuration.GetConnectionString("Default"),
                 optionsBuilder => optionsBuilder.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)
                 );
             return new CaiXinContext(builder.Options);
@@ -28,7 +23,7 @@ namespace CaiXin.EntityFrameworkCore
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appseting.json", false);
+                .AddJsonFile("appsettings.json", false);
             return builder.Build();
         }
     }
