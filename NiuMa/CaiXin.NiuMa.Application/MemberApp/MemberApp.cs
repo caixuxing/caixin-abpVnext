@@ -4,7 +4,6 @@ using CaiXin.NiuMa.Application.Contracts.MemberApp.Eto;
 using CaiXin.NiuMa.Domain.Member;
 using CaiXin.NiuMa.Domain.Shared.Response;
 using Mapster;
-using Microsoft.Extensions.Logging;
 using Volo.Abp.Application.Services;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Repositories;
@@ -24,49 +23,35 @@ namespace CaiXin.NiuMa.Application.MemberApp
 
         private IAsyncQueryableExecuter QueryableExecuter => LazyServiceProvider.LazyGetRequiredService<IAsyncQueryableExecuter>();
 
+        private IUnitOfWorkManager UnitOfWorkManager => LazyServiceProvider.LazyGetRequiredService<IUnitOfWorkManager>();
 
 
-        [UnitOfWork]
+        [UnitOfWork(IsDisabled = true)]
         public async Task<ApiResult<string>> MemberRegistrationAsync(MemberRegistrationDto cmd, CancellationToken token)
         {
-            Logger.LogInformation("会员 {MemberName} 创建成功", cmd.Name);
 
-            var user = cmd.Adapt<User>();
-
-            await UserRepo.InsertAsync(user, false, token);
-
-
-            await UserRepository.InsertManyAsync(new List<User> { user }, cancellationToken: token);
+            // 创建手动工作单元
+            using (var uow = UnitOfWorkManager.Begin(true, true))
+            {
+                // 插入用户
+                await UserRepo.InsertAsync(cmd.Adapt<User>(), false, cancellationToken: token);
 
 
-            var query = await UserRepository.GetQueryableAsync();
-            var data = await QueryableExecuter.FirstOrDefaultAsync(query.Where(w => w.Name == cmd.Name));
-
-
-            using var db = await UserRepository.GetDbContextAsync();
+                // 提交
+                await uow.SaveChangesAsync(token);
+                await uow.CompleteAsync();
+            }
 
 
 
-
-            var transaction = await db.Database.BeginTransactionAsync();
-
-
-            await transaction.CommitAsync();
-
-
-            await transaction.RollbackAsync();
-
-
+            //await CurrentUnitOfWork?.SaveChangesAsync(token);
 
             await LocalEventBus.PublishAsync(new MemberRegistrationEto
             {
-                OrderId = 1,
-                UserId = 1136,
-                UserPhone = "15580808032",
-                TotalAmount = 100
+                Name = cmd.Name,
+                Password = cmd.Password,
+                Salt = cmd.Salt
             }, false);
-
-            Logger.LogInformation("会员注册事件已发布,ID:{Id} ", cmd.Id);
 
             return await Task.FromResult(new ApiResult<string>()
             {

@@ -1,0 +1,79 @@
+{
+  "Serilog": {
+    "Using": [
+      "Serilog.Sinks.Console",
+      "Serilog.Sinks.File",
+      "Serilog.Sinks.Async"
+    ],
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Warning",
+        "System": "Warning",
+        "Microsoft.AspNetCore": "Warning",
+        "Microsoft.EntityFrameworkCore": "Warning",
+        "YueJia": "Information"
+      }
+    },
+    "WriteTo": [
+      {
+        "Name": "Console",
+        "Args": {
+          "outputTemplate": "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} <{SourceContext}>{NewLine}{Exception}",
+          "theme": "Serilog.Sinks.SystemConsole.Themes.AnsiConsoleTheme::Code, Serilog.Sinks.Console"
+        }
+      },
+      {
+        "Name": "Async",
+        "Args": {
+          "bufferSize": 1000,
+          "blockWhenFull": true,
+          "configure": [
+            {
+              "Name": "File",
+              "Args": {
+                "path": "logs/app-.log", // 按小时细分
+                "rollingInterval": "Hour",
+                "retainedFileCountLimit": 5,
+                "rollOnFileSizeLimit": true,
+                "fileSizeLimitBytes": 10485760,
+                "restrictedToMinimumLevel": "Information",
+                "outputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] {Message:lj} [Application: {Application}, Environment: {Environment}, Version: {Version}, MachineName: {MachineName}]{NewLine}{Exception}",
+                "buffered": true,
+                "flushToDiskInterval": "00:00:05"
+
+              }
+            }
+          ]
+        }
+      },
+      {
+        "Name": "Async",
+        "Args": {
+          "configure": [
+            {
+              "Name": "File",
+              "Args": {
+                "path": "logs/error-.log",
+                "rollingInterval": "Day",
+                "retainedFileCountLimit": 30,
+                "restrictedToMinimumLevel": "Error",
+                "outputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [ERROR] {Message:lj} [Application: {Application}, Environment: {Environment}, Version: {Version}, MachineName: {MachineName}]{NewLine}{Exception}"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "Enrich": [
+      "FromLogContext",
+      "WithMachineName"
+    ],
+    "Properties": {
+      "Application": "YueJia.AppendRoom.Web",
+      "Environment": "Production",
+      "Version": "1.0.0"
+    }
+  },
+  "AllowedHosts": "*"
+}

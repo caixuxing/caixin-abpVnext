@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CaiXin.NiuMa.Application.Contracts.MemberApp.Eto
+﻿namespace CaiXin.NiuMa.Application.Contracts.MemberApp.Eto
 {
     public class MemberRegistrationEto
     {
-        public int OrderId { get; set; }
+        /// <summary>
+        /// 姓名
+        /// </summary>
+        public string Name { get; set; } = default!;
+        /// <summary>
+        /// 密码
+        /// </summary>
+        public string Password { get; set; } = default!;
 
-        public int UserId { get; set; }
-
-        public string UserPhone { get; set; }
-
-        public decimal TotalAmount { get; set; }
+        /// <summary>
+        /// 盐值
+        /// </summary>
+        public string Salt { get; set; } = default!;
     }
 }
