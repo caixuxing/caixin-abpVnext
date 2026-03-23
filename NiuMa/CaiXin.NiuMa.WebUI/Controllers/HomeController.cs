@@ -1,8 +1,6 @@
 using CaiXin.NiuMa.Application.Contracts.MemberApp;
 using CaiXin.NiuMa.Application.Contracts.MemberApp.Commands;
-using CaiXin.NiuMa.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.DependencyInjection;
 
@@ -24,39 +22,19 @@ namespace CaiXin.NiuMa.WebUI.Controllers
 
 
 
-
-        public async Task<IActionResult> Index()
-        {
-
-            var result = await MemberApp.MemberRegistrationAsync(new MemberRegistrationDto()
-            {
-
-                Name = "张三",
-                Password = "123123",
-                Salt = "11360847"
-            }, default);
-
-            return View();
-        }
+        [ResponseCache(Duration = 10, Location = ResponseCacheLocation.Any)]
+        public IActionResult Index() => View();
 
 
+        /// <summary>
+        /// 创建会员
+        /// </summary>
+        /// <param name="request">请求参数</param>
+        /// <param name="token">token</param>
+        /// <returns></returns>
         [HttpPost, Route("/create")]
-        public async Task<IResult> Create([FromBody] MemberRegistrationDto request, CancellationToken token)
-        {
-            var result = await MemberApp.MemberRegistrationAsync(request, token);
-            return Results.Ok(result);
+        public async Task<IResult> Create([FromBody] MemberRegistrationDto request, CancellationToken token) => Results.Ok(await MemberApp.MemberRegistrationAsync(request, token));
 
-        }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }
