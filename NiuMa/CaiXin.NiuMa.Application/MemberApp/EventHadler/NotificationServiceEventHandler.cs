@@ -14,8 +14,7 @@ public class NotificationServiceEventHandler : ILocalEventHandler<MemberRegistra
     /// <summary>
     /// 会员创建事件->推送邮件
     /// </summary>
-    /// <param name="eventData"></param>
-    /// <returns></returns>
+    /// <param name="eto"></param>
     public async Task HandleEventAsync(MemberRegistrationEto eto)
     {
         _logger.LogInformation($"开始推送会员创建成功邮件通知");

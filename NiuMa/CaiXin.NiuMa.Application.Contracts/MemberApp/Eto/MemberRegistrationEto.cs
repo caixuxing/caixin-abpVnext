@@ -5,15 +5,15 @@
         /// <summary>
         /// 姓名
         /// </summary>
-        public string Name { get; set; } = default!;
+        public string Name { get; set; } = null!;
         /// <summary>
         /// 密码
         /// </summary>
-        public string Password { get; set; } = default!;
+        public string Password { get; set; } = null!;
 
         /// <summary>
         /// 盐值
         /// </summary>
-        public string Salt { get; set; } = default!;
+        public string Salt { get; set; } = null!;
     }
 }
