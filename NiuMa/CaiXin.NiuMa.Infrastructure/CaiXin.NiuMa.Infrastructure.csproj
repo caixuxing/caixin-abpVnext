@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Framework\CaiXin.BackgroundJob\CaiXin.BackgroundJob.csproj" />
     <ProjectReference Include="..\..\Framework\CaiXin.EntityFrameworkCore\CaiXin.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
