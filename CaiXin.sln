@@ -43,6 +43,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaiXin.BackgroundJob", "Fra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaiXin.NiuMa.WebUI", "NiuMa\CaiXin.NiuMa.WebUI\CaiXin.NiuMa.WebUI.csproj", "{3AC6A3D0-40A0-4502-A5D4-FD0435C7EF1C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaiXin.Cap", "Framework\CaiXin.Cap\CaiXin.Cap.csproj", "{35340851-DA0C-4C90-8DCA-0A80807E3CBA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -109,6 +111,10 @@ Global
 		{3AC6A3D0-40A0-4502-A5D4-FD0435C7EF1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AC6A3D0-40A0-4502-A5D4-FD0435C7EF1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AC6A3D0-40A0-4502-A5D4-FD0435C7EF1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35340851-DA0C-4C90-8DCA-0A80807E3CBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35340851-DA0C-4C90-8DCA-0A80807E3CBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35340851-DA0C-4C90-8DCA-0A80807E3CBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35340851-DA0C-4C90-8DCA-0A80807E3CBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -129,6 +135,7 @@ Global
 		{CF15742F-5558-421B-81C1-2A5DD4344766} = {3023BE17-4551-4087-BEB0-87E2143D784C}
 		{33DBB170-E494-44B2-9A5C-63FF8FDAD75F} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{3AC6A3D0-40A0-4502-A5D4-FD0435C7EF1C} = {3023BE17-4551-4087-BEB0-87E2143D784C}
+		{35340851-DA0C-4C90-8DCA-0A80807E3CBA} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E644E46F-4706-4479-B3A6-2F11F6C0AD04}
