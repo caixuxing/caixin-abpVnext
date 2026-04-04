@@ -12,4 +12,8 @@
     <ProjectReference Include="..\CaiXin.NiuMa.Infrastructure\CaiXin.NiuMa.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="MemberApp\BackgroundJob\" />
+  </ItemGroup>
+
 </Project>
