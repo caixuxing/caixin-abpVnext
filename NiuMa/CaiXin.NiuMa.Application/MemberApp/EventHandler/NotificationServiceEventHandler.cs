@@ -18,7 +18,7 @@ public class NotificationServiceEventHandler : ILocalEventHandler<MemberRegistra
 
     private readonly Hangfire.IBackgroundJobClient _backgroundJobClient;
 
-    public readonly IAbpLazyServiceProvider _lazyServiceProvider;
+    private readonly IAbpLazyServiceProvider _lazyServiceProvider;
 
     /// <summary>
     /// 
