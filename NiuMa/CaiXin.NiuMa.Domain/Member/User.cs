@@ -5,11 +5,11 @@ namespace CaiXin.NiuMa.Domain.Member;
 
 public class User : Entity<Guid>
 {
-    public string Name { get; set; } = null!;
+    public string Name { get; init; } = null!;
 
-    public string Password { get; set; } = null!;
+    public string Password { get; private set; } = null!;
 
-    public string Salt { get; set; } = null!;
+    public string Salt { get; init; } = null!;
 
     protected User()
     { }

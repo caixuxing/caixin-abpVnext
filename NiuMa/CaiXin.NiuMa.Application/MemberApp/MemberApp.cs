@@ -14,7 +14,7 @@ public class MemberApp(ILocalEventBus localEventBus,
                        IAsyncQueryableExecuter queryableExecuter) : ApplicationService, IMemberApp, ITransientDependency
 {
     [UnitOfWork]
-    public async Task<ApiResult<string>> MemberRegistrationAsync(MemberRegistrationDto cmd, CancellationToken token)
+    public virtual async Task<ApiResult<string>> MemberRegistrationAsync(MemberRegistrationDto cmd, CancellationToken token)
     {
         var user = User.Create(guidGenerator.Create(), cmd.Name, "123456", "11360847");
         await userRepo.InsertAsync(user, false, token);
