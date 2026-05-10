@@ -6,7 +6,7 @@ using CaiXin.NiuMa.Domain.Shared.Response;
 
 namespace CaiXin.NiuMa.Application.MemberApp;
 
-internal sealed class MemberApp(ILocalEventBus localEventBus,
+public class MemberApp(ILocalEventBus localEventBus,
                        IRepository<User, Guid> userRepo,
                        IUserRepository userRepository,
                        IAsyncQueryableExecuter queryableExecuter) : ApplicationService, IMemberApp, ITransientDependency
@@ -20,13 +20,7 @@ internal sealed class MemberApp(ILocalEventBus localEventBus,
 
         await userRepo.InsertAsync(user, false, token);
 
-        await localEventBus.PublishAsync(new MemberRegistrationEto
-        {
-            OrderId = 1,
-            UserId = 1136,
-            UserPhone = "15580808032",
-            TotalAmount = 100
-        }, false);
+        await localEventBus.PublishAsync(new MemberRegistrationEto(1, 1136, "15580808032", 100), false);
 
         Logger.LogInformation("会员注册事件已发布,ID:{Id} ", cmd.Id);
 
