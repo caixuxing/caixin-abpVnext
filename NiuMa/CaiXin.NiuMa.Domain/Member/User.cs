@@ -40,4 +40,15 @@ public class User : Entity<Guid>
 
         return new User(id, name, pwd, salt);
     }
+
+    /// <summary>
+    /// 更改密码
+    /// </summary>
+    /// <param name="password"></param>
+    /// <returns></returns>
+    public User UpdatePassword(string password)
+    {
+        Password = password;
+        return this;
+    }
 }

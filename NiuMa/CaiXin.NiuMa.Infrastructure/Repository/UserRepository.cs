@@ -13,25 +13,19 @@ namespace CaiXin.NiuMa.Infrastructure.Repository
         {
         }
 
-
         public async Task<User?> FindByEmailAsync(string email)
         {
-
             var data = await (await GetDbSetAsync()).FirstOrDefaultAsync(u => u.Name == email);
             return data;
         }
 
         public async Task UpdateUserNamesBatchAsync(string oldName, string newName)
         {
-
             var dbContext = await GetDbContextAsync();
             var users = await dbContext.Set<User>()
                 .Where(u => u.Name == oldName)
                 .ToListAsync();
-            foreach (var user in users)
-            {
-                user.Name = newName;
-            }
+            users.ForEach(item => item.UpdatePassword(newName));
             await dbContext.SaveChangesAsync();
         }
     }

@@ -17,7 +17,7 @@ internal sealed class NotificationServiceEventHandler(ILogger<NotificationServic
         var message = $"会员ID: {eto.OrderId} ，赠送会员积分金额: {eto.TotalAmount:C}";
 
         //模拟耗时  耗时任务  发布到后台作业hangfire
-        await Task.Delay(1000);
+        //await Task.Delay(1000);
 
         _logger.LogInformation(message);
     }
