@@ -1,17 +1,10 @@
-﻿using CaiXin.NiuMa.Application.Contracts.MemberApp.Commands;
-using CaiXin.NiuMa.Application.Contracts.MemberApp.Eto;
-using Microsoft.Extensions.Logging;
-using Volo.Abp.DependencyInjection;
-using Volo.Abp.EventBus;
+﻿using CaiXin.NiuMa.Application.Contracts.MemberApp.Eto;
 
 namespace CaiXin.NiuMa.Application.MemberApp.EventHadler;
 
-public class NotificationServiceEventHandler : ILocalEventHandler<MemberRegistrationEto>, ITransientDependency
+internal sealed class NotificationServiceEventHandler(ILogger<NotificationServiceEventHandler> _logger)
+    : ILocalEventHandler<MemberRegistrationEto>, ITransientDependency
 {
-    private readonly ILogger<NotificationServiceEventHandler> _logger;
-
-    public NotificationServiceEventHandler(ILogger<NotificationServiceEventHandler> logger) => _logger = logger;
-
     /// <summary>
     /// 会员创建事件->推送邮件
     /// </summary>
