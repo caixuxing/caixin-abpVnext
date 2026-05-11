@@ -10,8 +10,8 @@ namespace CaiXin.NiuMa.Application.MemberApp.EventHandler;
 /// </summary>
 internal sealed class NotificationServiceEventHandler(
     ILogger<NotificationServiceEventHandler> _logger,
-    Hangfire.IBackgroundJobClient _backgroundJobClient,
-    IJob<TestJobArgs> _testJob ) : ILocalEventHandler<MemberRegistrationEto>, ITransientDependency
+    IBackgroundJobClient _backgroundJobClient,
+    IJob<TestJobArgs> _testJob) : ILocalEventHandler<MemberRegistrationEto>, ITransientDependency
 {
     /// <summary>
     /// 会员创建事件->推送邮件
