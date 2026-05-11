@@ -36,6 +36,14 @@ namespace CaiXin.EntityFrameworkCore
             {
                 options.AddDefaultRepositories(includeAllEntities: true);
             });
+
+            // 配置 CAP 使用现有的 SQL Server 连接和 DbContext
+            context.Services.AddCap(x =>
+            {
+                x.UseEntityFramework<CaiXinContext>();
+                x.UseSqlServer(configuration.GetConnectionString("Default"));
+                // 暂时不在这里配置 Transport，因为 Transport 通常在 Web 层配置
+            });
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)

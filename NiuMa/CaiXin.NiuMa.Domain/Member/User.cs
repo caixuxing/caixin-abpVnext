@@ -13,11 +13,12 @@ public class User : Entity<Guid>
     /// <summary>
     /// 创建用户
     /// </summary>
+    /// <param name="guid"></param>
     /// <param name="name"></param>
     /// <param name="pwd"></param>
     /// <param name="salt"></param>
     /// <returns></returns>
-    public User Cteate(Guid guid, string name, string pwd, string salt)
+    public User Create(Guid guid, string name, string pwd, string salt)
     {
         this.Id = guid;
         this.Name = name;

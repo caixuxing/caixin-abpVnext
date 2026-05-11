@@ -1,4 +1,4 @@
-﻿using CaiXin.NiuMa.Domain.Member;
+using CaiXin.NiuMa.Domain.Member;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +26,7 @@ namespace CaiXin.NiuMa.Domain.DataSeed
 
         public async Task SeedAsync(DataSeedContext context)
         {
-            var userEntity = new User().Cteate(_guidGenerator.Create(), "caixin", "11360847", "123456");
+            var userEntity = new User().Create(_guidGenerator.Create(), "caixin", "11360847", "123456");
 
             await _userRepository.InsertAsync(userEntity);
         }
