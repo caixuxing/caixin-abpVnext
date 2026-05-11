@@ -38,9 +38,6 @@ namespace CaiXin.NiuMa.WebUI
         public override Task ConfigureServicesAsync(ServiceConfigurationContext context)
         {
             var configuration = context.Services.GetConfiguration();
-
-
-
             // context.Services.AddFluentValidationClientsideAdapters();
             context.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 

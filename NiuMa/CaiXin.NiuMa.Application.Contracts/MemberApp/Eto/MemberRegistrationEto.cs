@@ -1,19 +1,10 @@
-﻿namespace CaiXin.NiuMa.Application.Contracts.MemberApp.Eto
-{
-    public class MemberRegistrationEto
-    {
-        /// <summary>
-        /// 姓名
-        /// </summary>
-        public string Name { get; set; } = default!;
-        /// <summary>
-        /// 密码
-        /// </summary>
-        public string Password { get; set; } = default!;
+﻿namespace CaiXin.NiuMa.Application.Contracts.MemberApp.Eto;
 
-        /// <summary>
-        /// 盐值
-        /// </summary>
-        public string Salt { get; set; } = default!;
-    }
-}
+/// <summary>
+///
+/// </summary>
+/// <param name="OrderId"></param>
+/// <param name="UserId"></param>
+/// <param name="UserPhone"></param>
+/// <param name="TotalAmount"></param>
+public record MemberRegistrationEto(int OrderId, int UserId, string UserPhone, decimal TotalAmount);

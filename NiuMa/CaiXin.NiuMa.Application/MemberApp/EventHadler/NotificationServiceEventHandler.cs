@@ -1,16 +1,10 @@
 ﻿using CaiXin.NiuMa.Application.Contracts.MemberApp.Eto;
-using Microsoft.Extensions.Logging;
-using Volo.Abp.DependencyInjection;
-using Volo.Abp.EventBus;
 
 namespace CaiXin.NiuMa.Application.MemberApp.EventHadler;
 
-public class NotificationServiceEventHandler : ILocalEventHandler<MemberRegistrationEto>, ITransientDependency
+internal sealed class NotificationServiceEventHandler(ILogger<NotificationServiceEventHandler> _logger)
+    : ILocalEventHandler<MemberRegistrationEto>, ITransientDependency
 {
-    private readonly ILogger<NotificationServiceEventHandler> _logger;
-
-    public NotificationServiceEventHandler(ILogger<NotificationServiceEventHandler> logger) => _logger = logger;
-
     /// <summary>
     /// 会员创建事件->推送邮件
     /// </summary>
@@ -20,12 +14,10 @@ public class NotificationServiceEventHandler : ILocalEventHandler<MemberRegistra
     {
         _logger.LogInformation($"开始推送会员创建成功邮件通知");
 
-        var message = $"会员ID: {eto.Name} ，赠送会员积分金额: {eto.Salt:C}";
+        var message = $"会员ID: {eto.OrderId} ，赠送会员积分金额: {eto.TotalAmount:C}";
 
         //模拟耗时  耗时任务  发布到后台作业hangfire
-        await Task.Delay(9000);
-
-        //throw new Exception("订阅事件处理异常！");
+        //await Task.Delay(1000);
 
         _logger.LogInformation(message);
     }

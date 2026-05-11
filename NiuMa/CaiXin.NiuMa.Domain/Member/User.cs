@@ -1,30 +1,54 @@
-﻿using Volo.Abp.Domain.Entities;
+﻿using System.Collections.Generic;
+using Volo.Abp.Domain.Entities;
 
 namespace CaiXin.NiuMa.Domain.Member;
 
 public class User : Entity<Guid>
 {
-    public string Name { get; set; } = default!;
+    public string Name { get; init; } = null!;
 
-    public string Password { get; set; } = default!;
+    public string Password { get; private set; } = null!;
 
-    public string Salt { get; set; } = default!;
+    public string Salt { get; init; } = null!;
+
+    protected User()
+    { }
+
+    private User(Guid id, string name, string password, string salt)
+    {
+        Name = name;
+        Password = password;
+        Salt = salt;
+        Id = id;
+    }
 
     /// <summary>
     /// 创建用户
     /// </summary>
-    /// <param name="guid"></param>
+    /// <param name="guId"></param>
     /// <param name="name"></param>
     /// <param name="pwd"></param>
     /// <param name="salt"></param>
     /// <returns></returns>
-    public User Create(Guid guid, string name, string pwd, string salt)
+    public static User Create(Guid id, string name, string pwd, string salt)
     {
-        this.Id = guid;
-        this.Name = name;
-        this.Password = pwd;
-        this.Salt = salt;
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("用户名不能为空");
 
+        if (name.Length < 2 || name.Length > 20)
+            throw new ArgumentException("用户名长度必须在2-20之间");
+
+        return new User(id, name, pwd, salt);
+    }
+
+    /// <summary>
+    /// 更改密码
+    /// </summary>
+    /// <param name="password"></param>
+    /// <returns></returns>
+    public User UpdatePassword(string password)
+    {
+        Password = password;
         return this;
     }
 }

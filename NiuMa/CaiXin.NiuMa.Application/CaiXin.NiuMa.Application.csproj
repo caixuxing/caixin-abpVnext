@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="MemberApp\BackgroundJob\**" />
+    <EmbeddedResource Remove="MemberApp\BackgroundJob\**" />
+    <None Remove="MemberApp\BackgroundJob\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Framework\CaiXin.Application\CaiXin.Application.csproj" />
     <ProjectReference Include="..\CaiXin.NiuMa.Application.Contracts\CaiXin.NiuMa.Application.Contracts.csproj" />
     <ProjectReference Include="..\CaiXin.NiuMa.Infrastructure\CaiXin.NiuMa.Infrastructure.csproj" />
