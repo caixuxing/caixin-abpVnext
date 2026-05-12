@@ -7,24 +7,24 @@ using Volo.Abp.EntityFrameworkCore;
 
 namespace CaiXin.NiuMa.Infrastructure.Repository
 {
-    public class UserRepository : EfCoreRepository<CaiXinContext, User, Guid>, IUserRepository, ITransientDependency
+    public class UserRepository(IDbContextProvider<CaiXinContext> dbContextProvider)
+        : EfCoreRepository<CaiXinContext, User, Guid>(dbContextProvider), IUserRepository, ITransientDependency
     {
-        public UserRepository(IDbContextProvider<CaiXinContext> dbContextProvider) : base(dbContextProvider)
-        {
-        }
-
         public async Task<User?> FindByEmailAsync(string email)
         {
-            var data = await (await GetDbSetAsync()).FirstOrDefaultAsync(u => u.Name == email);
+            var data = await (await GetDbSetAsync())
+                                    .AsNoTracking()
+                                    .FirstOrDefaultAsync(u => u.Name == email);
             return data;
         }
 
         public async Task UpdateUserNamesBatchAsync(string oldName, string newName)
         {
             var dbContext = await GetDbContextAsync();
-            var users = await dbContext.Set<User>()
-                .Where(u => u.Name == oldName)
-                .ToListAsync();
+            var users = await dbContext
+                                .Set<User>()
+                                .Where(u => u.Name == oldName)
+                                .ToListAsync();
             users.ForEach(item => item.UpdatePassword(newName));
             await dbContext.SaveChangesAsync();
         }
