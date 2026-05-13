@@ -1,4 +1,6 @@
-﻿namespace CaiXin.NiuMa.Application.Contracts.MemberApp.Eto;
+﻿using CaiXin.Application.Contracts;
+
+namespace CaiXin.NiuMa.Application.Contracts.MemberApp.Eto;
 
 /// <summary>
 ///
@@ -8,3 +10,10 @@
 /// <param name="UserPhone"></param>
 /// <param name="TotalAmount"></param>
 public record MemberRegistrationEto(int OrderId, int UserId, string UserPhone, decimal TotalAmount);
+
+public class MemberRegistrationEtos : EventBaseDto
+{
+    public int Id { get; set; }
+
+    public string Coment { get; set; }
+}
