@@ -1,12 +1,9 @@
 ﻿using CaiXin.EventBus;
-using CaiXin.EventBus.Implements;
 using CaiXin.NiuMa.Application.Contracts.MemberApp;
 using CaiXin.NiuMa.Application.Contracts.MemberApp.Commands;
 using CaiXin.NiuMa.Application.Contracts.MemberApp.Eto;
 using CaiXin.NiuMa.Domain.Member;
 using CaiXin.NiuMa.Domain.Shared.Response;
-using DotNetCore.CAP;
-using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.Guids;
 
 namespace CaiXin.NiuMa.Application.MemberApp;
@@ -16,7 +13,8 @@ internal sealed class MemberApp(ILocalEventBus localEventBus,
                        IRepository<User, Guid> userRepo,
                        IUserRepository userRepository,
                        IGuidGenerator guidGenerator,
-                       IAsyncQueryableExecuter queryableExecuter, ICaiXinDistributedEventBus distributedEventBus) : ApplicationService, IMemberApp, ITransientDependency
+                       IAsyncQueryableExecuter queryableExecuter, ICaiXinDistributedEventBus distributedEventBus,
+                        ILogger<MemberApp> _logger) : ApplicationService, IMemberApp, ITransientDependency
 {
     [UnitOfWork]
     public async Task<ApiResult<string>> MemberRegistrationAsync(MemberRegistrationDto cmd, CancellationToken token)
@@ -29,13 +27,5 @@ internal sealed class MemberApp(ILocalEventBus localEventBus,
         return (new() { Code = 200, Data = "成功", Message = "" });
     }
 
-    //订阅事件
-    [NonAction]
-    [CapSubscribe("test")]
-    public async Task<string> TestCapSubscribe(MemberRegistrationEtos message)
-    {
-        await Task.Delay(3000);
-        //_logger.LogInformation($"订阅事件已经完毕：{message}");
-        return "OK";
-    }
+
 }

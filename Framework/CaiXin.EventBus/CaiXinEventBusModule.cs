@@ -37,7 +37,7 @@ namespace CaiXin.EventBus
                     //密码
                     rabbitMqOptions.Password = "rabbitmq";
                     //虚拟主机
-                    rabbitMqOptions.VirtualHost = "/";
+                    // rabbitMqOptions.VirtualHost = "/";
                     //端口号
                     rabbitMqOptions.Port = 5672;
                     //CAP默认Exchange名称

@@ -115,18 +115,18 @@ namespace CaiXin.NiuMa.WebUI
             //context.Services.Configure<SmsConfig>(context.Services.GetConfiguration().GetSection("Sms"));
             //context.Services.Configure<EmailConfig>(context.Services.GetConfiguration().GetSection("Email"));
             //context.Services.Configure<SysErrorEmailRecipientConfig>(context.Services.GetConfiguration().GetSection("SysErrorEmailRecipient"));
-            context.Services.AddCap(x =>
-            {
-                // 使用 RabbitMQ 作为传输层 (示例配置，实际参数应从 appsettings 获取)
-                x.UseRabbitMQ(opt =>
-                {
-                    opt.HostName = configuration["RabbitMQ:HostName"] ?? "localhost";
-                    opt.UserName = configuration["RabbitMQ:UserName"] ?? "guest";
-                    opt.Password = configuration["RabbitMQ:Password"] ?? "guest";
-                });
-                // 启用 Dashboard
-                x.UseDashboard();
-            });
+            //context.Services.AddCap(x =>
+            //{
+            //    // 使用 RabbitMQ 作为传输层 (示例配置，实际参数应从 appsettings 获取)
+            //    x.UseRabbitMQ(opt =>
+            //    {
+            //        opt.HostName = configuration["RabbitMQ:HostName"] ?? "localhost";
+            //        opt.UserName = configuration["RabbitMQ:UserName"] ?? "guest";
+            //        opt.Password = configuration["RabbitMQ:Password"] ?? "guest";
+            //    });
+            //    // 启用 Dashboard
+            //    x.UseDashboard();
+            //});
             return base.ConfigureServicesAsync(context);
         }
 

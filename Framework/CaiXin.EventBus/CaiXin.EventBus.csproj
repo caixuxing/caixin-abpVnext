@@ -7,7 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DotNetCore.CAP" Version="8.3.2" />
+    <Compile Remove="AksoCAPContributor.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="DotNetCore.CAP.Dashboard" Version="8.3.2" />
     <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="8.3.2" />
     <PackageReference Include="DotNetCore.CAP.SqlServer" Version="8.3.2" />
