@@ -1,10 +1,5 @@
 ﻿using CaiXin.Application.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Volo.Abp.EventBus.Distributed;
+using DotNetCore.CAP;
 using Volo.Abp.MultiTenancy;
 
 namespace CaiXin.EventBus.Implements
@@ -12,7 +7,7 @@ namespace CaiXin.EventBus.Implements
     /// <summary>
     /// 分布式事务总线实现
     /// </summary>
-    public class CaiXinDistributedEventBus(IDistributedEventBus distributedEventBus, ICurrentTenant CurrentTenant) : CaiXinBaseEventBus(CurrentTenant), ICaiXinDistributedEventBus
+    public class CaiXinDistributedEventBus(ICapPublisher distributedEventBus, ICurrentTenant CurrentTenant) : CaiXinBaseEventBus(CurrentTenant), ICaiXinDistributedEventBus
     {
         /// <summary>
         /// 发布消息
@@ -28,7 +23,7 @@ namespace CaiXin.EventBus.Implements
                 if (string.IsNullOrWhiteSpace(eventObject.EventName)) throw new ArgumentNullException(nameof(eventObject.EventName), "消息的事件名称不能为空！");
 
                 base.SetBasicInfo(eventData);
-                await distributedEventBus.PublishAsync(eventData, true, true);
+                await distributedEventBus.PublishAsync(eventObject.EventName, eventData);
             }
         }
     }

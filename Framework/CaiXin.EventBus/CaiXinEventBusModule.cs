@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Volo.Abp;
-using Volo.Abp.EventBus.RabbitMq;
 using Volo.Abp.Modularity;
 
 namespace CaiXin.EventBus
@@ -9,12 +8,64 @@ namespace CaiXin.EventBus
     /// <summary>
     /// 事件总线
     /// </summary>
-    public class CaiXinEventBusModule : AbpEventBusRabbitMqModule
+    public class CaiXinEventBusModule : AbpModule
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
+            context.Services.AddCap(options =>
+            {
+                //订阅者所属的默认消费者组
+                options.DefaultGroupName = "caixin.nima.dotnet.cap";
+                //成功的消息被删除的过期时间/秒
+                options.SucceedMessageExpiredAfter = 10;
+                //失败最大重试次数
+                options.FailedRetryCount = 10;
+                //失败重试间隔时间	/ 秒
+                options.FailedRetryInterval = 20;
+                //执行失败消息时的回调函数
+                options.FailedThresholdCallback = null;
+
+                //options.FailedMessageExpiredAfter = 10;
+
+                //配置RabbitMQ
+                options.UseRabbitMQ(rabbitMqOptions =>
+                {
+                    //宿主地址
+                    rabbitMqOptions.HostName = "host";
+                    //用户名
+                    rabbitMqOptions.UserName = "rabbitmq";
+                    //密码
+                    rabbitMqOptions.Password = "rabbitmq";
+                    //虚拟主机
+                    rabbitMqOptions.VirtualHost = "/";
+                    //端口号
+                    rabbitMqOptions.Port = 5672;
+                    //CAP默认Exchange名称
+                    rabbitMqOptions.ExchangeName = "caixin.nima.dotnet.cap";
+
+                    //RabbitMQ连接超时时间
+                    /*   rabbitMqOptions.RequestedConnectionTimeout = 30000;
+                       //RabbitMQ消息读取超时时间
+                       rabbitMqOptions.SocketReadTimeout = 30000;
+                       //RabbitMQ消息写入超时时间
+                       rabbitMqOptions.SocketWriteTimeout = 30000;
+                       //队列中消息自动删除时间 (10天) 毫秒
+                       rabbitMqOptions.QueueMessageExpires = 864000000;*/
+                });
+                //配置SQLServer
+                options.UseSqlServer(sqlServerOptions =>
+                {
+                    //数据库连接字符串
+                    sqlServerOptions.ConnectionString = "server=host;uid=sa;pwd=sa@12345;database=CaiXin_Db;Encrypt=True;TrustServerCertificate=True;";
+                    //Cap表架构
+                    sqlServerOptions.Schema = "Cap";
+                });
+                //启用面板
+                options.UseDashboard();
+            });
+
             // CAP配置
-            ConfigureCAP(context);
+            // ConfigureCAP(context);
 
             // 取消原模块 RabbitMQ 配置处理
         }
