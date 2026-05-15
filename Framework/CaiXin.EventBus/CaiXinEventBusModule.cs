@@ -25,7 +25,10 @@ namespace CaiXin.EventBus
                 //执行失败消息时的回调函数
                 options.FailedThresholdCallback = null;
 
-                //options.FailedMessageExpiredAfter = 10;
+                // 设置失败消息的过期时间为 30 天（秒为单位）
+                //options.FailedMessageExpiredAfter = 30 * 24 * 3600;
+
+                options.FailedMessageExpiredAfter = 30;
 
                 //配置RabbitMQ
                 options.UseRabbitMQ(rabbitMqOptions =>
@@ -43,14 +46,30 @@ namespace CaiXin.EventBus
                     //CAP默认Exchange名称
                     rabbitMqOptions.ExchangeName = "caixin.nima.dotnet.cap";
 
+
+
                     //RabbitMQ连接超时时间
-                    /*   rabbitMqOptions.RequestedConnectionTimeout = 30000;
-                       //RabbitMQ消息读取超时时间
-                       rabbitMqOptions.SocketReadTimeout = 30000;
-                       //RabbitMQ消息写入超时时间
-                       rabbitMqOptions.SocketWriteTimeout = 30000;
-                       //队列中消息自动删除时间 (10天) 毫秒
-                       rabbitMqOptions.QueueMessageExpires = 864000000;*/
+                    rabbitMqOptions.ConnectionFactoryOptions = (t) =>
+                    {
+
+                        //设置连接超时为 5 秒
+                        t.RequestedConnectionTimeout = TimeSpan.FromSeconds(5);
+                        //设置操作（如发布）超时为 3 秒
+                        t.ContinuationTimeout = TimeSpan.FromSeconds(3);
+                        //RabbitMQ消息读取超时时间
+                        t.SocketReadTimeout = TimeSpan.FromSeconds(3);
+                        //RabbitMQ消息写入超时时间
+                        t.SocketWriteTimeout = TimeSpan.FromSeconds(3);
+
+
+                    };
+                    rabbitMqOptions.QueueArguments = new DotNetCore.CAP.RabbitMQOptions.QueueArgumentsOptions()
+                    {
+                        //10天 = 10 * 24 * 3600 * 1000 = 864,000,000 毫秒
+                        MessageTTL = 864000000
+                    };
+
+                    //.QueueMessageExpires = 864000000;
                 });
                 //配置SQLServer
                 options.UseSqlServer(sqlServerOptions =>
