@@ -1,6 +1,7 @@
 ﻿using BootstrapBlazor.Components;
 using CaiXin.EntityFrameworkCore;
 using CaiXin.NiuMa.Application;
+using CaiXin.NiuMa.WebBlazor.Components;
 using Microsoft.Extensions.Options;
 using Volo.Abp;
 using Volo.Abp.AspNetCore;
@@ -17,26 +18,26 @@ namespace CaiXin.NiuMa.WebBlazor
    )]
     public class NiuMaWebBlazorModule : AbpModule
     {
-
         #region 中间件注入
+
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             context.Services.AddMemoryCache();
             context.Services.AddHttpClient();
             ConfigureBlazor(context);
-            ConfigureMvc(context);
-        }
-        private void ConfigureMvc(ServiceConfigurationContext context)
-        {
             context.Services.AddControllers();
         }
+
         /// <summary>
         /// Blazor
         /// </summary>
         /// <param name="context"></param>
         private void ConfigureBlazor(ServiceConfigurationContext context)
         {
-            context.Services.AddRazorPages();
+            context.Services.AddRazorComponents()
+               .AddInteractiveServerComponents();
+
+            //context.Services.AddRazorPages();
             context.Services.AddServerSideBlazor();
             context.Services.AddBootstrapBlazor(options =>
             {
@@ -63,12 +64,12 @@ namespace CaiXin.NiuMa.WebBlazor
             });
         }
 
-        #endregion
+        #endregion 中间件注入
+
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
             var app = context.GetApplicationBuilder();
             var env = context.GetEnvironment();
-
             var option = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             if (option != null)
             {
@@ -76,15 +77,9 @@ namespace CaiXin.NiuMa.WebBlazor
             }
             app.UseStaticFiles();
             app.UseRouting();
-
             app.UseExceptionHandler("/Error");
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-                //endpoints.MapBlazorHub();
-                //endpoints.MapFallbackToPage("/Home");
-            });
+
+            app.UseAntiforgery();
         }
     }
-
 }

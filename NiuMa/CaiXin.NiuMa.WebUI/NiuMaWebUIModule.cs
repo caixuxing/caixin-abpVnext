@@ -16,8 +16,6 @@ using Volo.Abp.Modularity;
 
 namespace CaiXin.NiuMa.WebUI
 {
-
-
     /// <summary>
     /// WebModule
     /// </summary>
@@ -29,9 +27,8 @@ namespace CaiXin.NiuMa.WebUI
     )]
     public class NiuMaWebUIModule : AbpModule
     {
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
@@ -48,13 +45,7 @@ namespace CaiXin.NiuMa.WebUI
                 opt.EnableEndpointRouting = false;
             }).AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
 
-
-
-
-
             context.Services.AddHttpContextAccessor();
-
-
 
             var domainName = configuration.GetSection("DomainName").Get<string>();
             context.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -78,7 +69,6 @@ namespace CaiXin.NiuMa.WebUI
 
                              var baseUrl = domainName ?? $"{scheme}://{host}";
 
-
                              context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                              if (context.Request.Headers.ContainsKey("Accept") && (context.Request.Headers["Accept"].FirstOrDefault()?.Contains("application/json") ?? false))
                              {
@@ -98,11 +88,6 @@ namespace CaiXin.NiuMa.WebUI
                          }
                      };
                  });
-
-
-
-
-
 
             context.Services.AddSwaggerGen(c =>
             {
@@ -130,12 +115,11 @@ namespace CaiXin.NiuMa.WebUI
             return base.ConfigureServicesAsync(context);
         }
 
-
-
-        public override Task OnPreApplicationInitializationAsync(ApplicationInitializationContext context)
+        public override async Task OnPreApplicationInitializationAsync(ApplicationInitializationContext context)
         {
-            return base.OnPreApplicationInitializationAsync(context);
+            await base.OnPreApplicationInitializationAsync(context);
         }
+
         public override Task OnApplicationInitializationAsync(ApplicationInitializationContext context)
         {
             var app = context.GetApplicationBuilder();
@@ -154,6 +138,5 @@ namespace CaiXin.NiuMa.WebUI
             });
             return base.OnApplicationInitializationAsync(context);
         }
-
     }
 }

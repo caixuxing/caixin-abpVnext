@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp;
+using Volo.Abp.Dapper;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.SqlServer;
@@ -12,7 +13,8 @@ namespace CaiXin.EntityFrameworkCore
 {
     [DependsOn(
         typeof(NiuMaDomainModule),
-        typeof(AbpEntityFrameworkCoreSqlServerModule)
+        typeof(AbpEntityFrameworkCoreSqlServerModule),
+         typeof(AbpDapperModule)
 
            )]
     public class CaiXinEntityFrameworkCoreModule : AbpModule
@@ -24,7 +26,6 @@ namespace CaiXin.EntityFrameworkCore
             Configure<AbpDbConnectionOptions>(options =>
             {
                 options.ConnectionStrings.Default = configuration.GetConnectionString("Default");
-
             });
 
             Configure<AbpDbContextOptions>(options =>

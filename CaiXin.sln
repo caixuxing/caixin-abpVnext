@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36203.30
+# Visual Studio Version 18
+VisualStudioVersion = 18.6.11806.211 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
@@ -46,6 +46,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaiXin.Cap", "Framework\CaiXin.Cap\CaiXin.Cap.csproj", "{35340851-DA0C-4C90-8DCA-0A80807E3CBA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaiXin.EventBus", "Framework\CaiXin.EventBus\CaiXin.EventBus.csproj", "{D630F19E-0E6B-4B19-8753-82C7A006FB12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp1", "NiuMa\BlazorApp1\BlazorApp1.csproj", "{9740F967-B1C8-4A83-AEDC-CA6F181F3E33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,6 +123,10 @@ Global
 		{D630F19E-0E6B-4B19-8753-82C7A006FB12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D630F19E-0E6B-4B19-8753-82C7A006FB12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D630F19E-0E6B-4B19-8753-82C7A006FB12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9740F967-B1C8-4A83-AEDC-CA6F181F3E33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9740F967-B1C8-4A83-AEDC-CA6F181F3E33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9740F967-B1C8-4A83-AEDC-CA6F181F3E33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9740F967-B1C8-4A83-AEDC-CA6F181F3E33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -143,6 +149,7 @@ Global
 		{3AC6A3D0-40A0-4502-A5D4-FD0435C7EF1C} = {3023BE17-4551-4087-BEB0-87E2143D784C}
 		{35340851-DA0C-4C90-8DCA-0A80807E3CBA} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{D630F19E-0E6B-4B19-8753-82C7A006FB12} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{9740F967-B1C8-4A83-AEDC-CA6F181F3E33} = {3023BE17-4551-4087-BEB0-87E2143D784C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E644E46F-4706-4479-B3A6-2F11F6C0AD04}

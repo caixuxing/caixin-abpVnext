@@ -7,7 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="C:\Users\Administrator\.nuget\packages\volo.abp.aspnetcore\8.2.3\contentFiles\any\net8.0\Volo.Abp.AspNetCore.abppkg.analyze.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BootstrapBlazor" Version="10.4.1" />
+    <PackageReference Include="DotNetCore.CAP.Dashboard" Version="10.0.1" />
+    <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="10.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
