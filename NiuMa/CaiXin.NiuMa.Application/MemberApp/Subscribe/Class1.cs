@@ -11,7 +11,7 @@ namespace CaiXin.NiuMa.Application.MemberApp.Subscribe
         [CapSubscribe("test")]
         public async Task<string> TestCapSubscribe(MemberRegistrationEtos message)
         {
-            await Task.Delay(3000);
+            //await Task.Delay(3000);
             _logger.LogInformation($"cap订阅事件已经完毕：{message}");
             return "OK";
         }

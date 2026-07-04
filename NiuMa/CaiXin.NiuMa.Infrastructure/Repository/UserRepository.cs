@@ -28,5 +28,12 @@ namespace CaiXin.NiuMa.Infrastructure.Repository
             users.ForEach(item => item.UpdatePassword(newName));
             await dbContext.SaveChangesAsync();
         }
+
+        public async Task<bool> TestSql(User user, Func<string, string, string, Task<string>> factory)
+        {
+            var sql = await factory(user.Name, user.Password, user.Salt);
+            Console.Write(sql);
+            return true;
+        }
     }
 }

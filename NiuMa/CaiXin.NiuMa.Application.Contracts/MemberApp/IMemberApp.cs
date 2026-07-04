@@ -1,4 +1,7 @@
-﻿using CaiXin.NiuMa.Application.Contracts.MemberApp.Commands;
+﻿using CaiXin.NiuMa.Application.Contracts.BaseQuery;
+using CaiXin.NiuMa.Application.Contracts.MemberApp.Commands;
+using CaiXin.NiuMa.Application.Contracts.MemberApp.Dto;
+using CaiXin.NiuMa.Application.Contracts.MemberApp.Qry;
 using CaiXin.NiuMa.Domain.Shared.Response;
 
 namespace CaiXin.NiuMa.Application.Contracts.MemberApp;
@@ -17,4 +20,12 @@ public interface IMemberApp
     /// <param name="token">取消令牌，用于支持异步操作的取消和控制</param>
     /// <returns>返回包含注册结果的API响应对象，成功时Code为200，失败时Code为400</returns>
     Task<ApiResult<string>> MemberRegistrationAsync(MemberRegistrationDto cmd, CancellationToken token);
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="qry"></param>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    Task<ApiResult<List<MemberPageDto>>> MemberRegistrationAsync(MemberPageQry qry, CancellationToken token);
 }
