@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using CaiXin.EntityFrameworkCore;
+﻿using CaiXin.EntityFrameworkCore;
 using CaiXin.EventBus;
 using CaiXin.NiuMa.Application.Contracts.MemberApp;
 using CaiXin.NiuMa.Application.Contracts.MemberApp.Commands;
@@ -7,7 +6,6 @@ using CaiXin.NiuMa.Application.Contracts.MemberApp.Dto;
 using CaiXin.NiuMa.Application.Contracts.MemberApp.Eto;
 using CaiXin.NiuMa.Application.Contracts.MemberApp.Qry;
 using CaiXin.NiuMa.Domain.Member;
-using CaiXin.NiuMa.Domain.Ports;
 using CaiXin.NiuMa.Domain.Shared.Response;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -22,15 +20,16 @@ internal sealed class MemberApp(ILocalEventBus localEventBus,
                        IGuidGenerator guidGenerator,
                        IAsyncQueryableExecuter queryableExecuter,
                        ICaiXinDistributedEventBus distributedEventBus,
-                        IDbContextProvider<CaiXinContext> _dbContextProvider,
-                        IPageQuery<MemberPageQry, MemberPageDto> pageQuery
+                        IDbContextProvider<CaiXinContext> _dbContextProvider
+                       //,
+                       //IPageQuery<MemberPageQry, MemberPageDto> pageQuery
                        )
     : ApplicationService, IMemberApp, ITransientDependency
 {
     public async Task<ApiResult<string>> MemberRegistrationAsync(MemberRegistrationDto cmd, CancellationToken token)
     {
         //创建用户
-        var user = User.Create(guidGenerator.Create(), cmd.Name, "123456", "11360847");
+        var user = User.Create(guidGenerator.Create(), cmd.Name, "123456");
         //添加到仓储
         await userRepository.InsertAsync(user);
 
@@ -53,18 +52,18 @@ internal sealed class MemberApp(ILocalEventBus localEventBus,
 
     public async Task<ApiResult<List<MemberPageDto>>> MemberRegistrationAsync(MemberPageQry qry, CancellationToken token)
     {
-        var (data, allCount) = await pageQuery.PageQueryAsync(qry, token);
+        // var (data, allCount) = await pageQuery.PageQueryAsync(qry, token);
 
         return new ApiResult<List<MemberPageDto>>()
         {
-            Data = data,
+            Data = null,
         };
     }
 
     public async Task<List<MemberPageDto>> QueryAsync(MemberPageQry request, CancellationToken token = default)
     {
         var query = await userRepository.GetQueryableAsync();
-        query = query.WhereIf(!request.UserName.IsNullOrWhiteSpace(), b => b.Name.Contains(request.UserName))
+        query = query.WhereIf(!request.UserName.IsNullOrWhiteSpace(), b => b.Name.Value.Contains(request.UserName))
             .OrderBy(b => b.Id);
 
         var data = await query.ToListAsync();

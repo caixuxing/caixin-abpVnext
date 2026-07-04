@@ -42,7 +42,7 @@ namespace CaiXin.EntityFrameworkCore
             context.Services.AddCap(x =>
             {
                 x.UseEntityFramework<CaiXinContext>();
-                x.UseSqlServer(configuration.GetConnectionString("Default"));
+                x.UseSqlServer(configuration.GetConnectionString("Default") ?? string.Empty);
                 // 暂时不在这里配置 Transport，因为 Transport 通常在 Web 层配置
             });
         }

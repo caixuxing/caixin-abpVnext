@@ -14,7 +14,7 @@ namespace CaiXin.NiuMa.Infrastructure.Repository
         {
             var data = await (await GetDbSetAsync())
                                     .AsNoTracking()
-                                    .FirstOrDefaultAsync(u => u.Name == email);
+                                    .FirstOrDefaultAsync(u => u.Name.Value == email);
             return data;
         }
 
@@ -23,15 +23,15 @@ namespace CaiXin.NiuMa.Infrastructure.Repository
             var dbContext = await GetDbContextAsync();
             var users = await dbContext
                                 .Set<User>()
-                                .Where(u => u.Name == oldName)
+                                .Where(u => u.Name.Value == oldName)
                                 .ToListAsync();
-            users.ForEach(item => item.UpdatePassword(newName));
+            users.ForEach(item => item.ChangePassword(newName));
             await dbContext.SaveChangesAsync();
         }
 
         public async Task<bool> TestSql(User user, Func<string, string, string, Task<string>> factory)
         {
-            var sql = await factory(user.Name, user.Password, user.Salt);
+            var sql = await factory(user.Name.Value, user.Password.Password, user.Password.Salt);
             Console.Write(sql);
             return true;
         }

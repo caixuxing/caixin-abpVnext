@@ -1,44 +1,36 @@
-﻿using System.Collections.Generic;
+﻿using CaiXin.NiuMa.Domain.Member.ValueObjects;
 using Volo.Abp.Domain.Entities;
 
 namespace CaiXin.NiuMa.Domain.Member;
 
 public class User : Entity<Guid>
 {
-    public string Name { get; init; } = null!;
+    public UserName Name { get; init; } = null!;
 
-    public string Password { get; private set; } = null!;
+    public UserPassword Password { get; private set; } = null!;
 
-    public string Salt { get; init; } = null!;
-
-    protected User()
+    private User()
     { }
 
-    private User(Guid id, string name, string password, string salt)
+    private User(Guid id, UserName name, UserPassword password)
     {
         Name = name;
         Password = password;
-        Salt = salt;
         Id = id;
     }
 
     /// <summary>
     /// 创建用户
     /// </summary>
-    /// <param name="guId"></param>
+    /// <param name="id"></param>
     /// <param name="name"></param>
     /// <param name="pwd"></param>
-    /// <param name="salt"></param>
     /// <returns></returns>
-    public static User Create(Guid id, string name, string pwd, string salt)
+    public static User Create(Guid id, string name, string pwd)
     {
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("用户名不能为空");
-
-        if (name.Length < 2 || name.Length > 20)
-            throw new ArgumentException("用户名长度必须在2-20之间");
-
-        return new User(id, name, pwd, salt);
+        var userName = UserName.Create(name);
+        var password = UserPassword.Create(pwd);
+        return new User(id, userName, password);
     }
 
     /// <summary>
@@ -46,9 +38,9 @@ public class User : Entity<Guid>
     /// </summary>
     /// <param name="password"></param>
     /// <returns></returns>
-    public User UpdatePassword(string password)
+    public User ChangePassword(string password)
     {
-        Password = password;
+        Password = UserPassword.Create(password);
         return this;
     }
 }

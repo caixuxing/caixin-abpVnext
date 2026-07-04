@@ -26,7 +26,7 @@ namespace CaiXin.NiuMa.Domain.DataSeed
 
         public async Task SeedAsync(DataSeedContext context)
         {
-            var userEntity = User.Create(_guidGenerator.Create(), "caixin", "11360847", "123456");
+            var userEntity = User.Create(_guidGenerator.Create(), "caixin", "11360847");
             await _userRepository.InsertAsync(userEntity);
         }
     }
