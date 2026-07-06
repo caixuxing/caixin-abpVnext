@@ -43,6 +43,14 @@ internal sealed class MemberApp(ILocalEventBus localEventBus,
         //工作单元提交
         await CurrentUnitOfWork!.SaveChangesAsync(token);
 
+
+        var rows = await userRepository.FindAsync(w => w.Id == Guid.NewGuid(), false, token) ?? throw new Exception("用户资源不存在,无法执行更新操作");
+        rows.ChangePassword("9527");
+        //工作单元提交
+        await CurrentUnitOfWork!.SaveChangesAsync(token);
+
+
+
         // 1. 获取 DbContext
         var dbContext = await _dbContextProvider.GetDbContextAsync();
 
