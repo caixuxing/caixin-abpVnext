@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CaiXin.NiuMa.Application.MemberApp.Subscribe
 {
+    /// <summary>
+    /// Cap 事件订阅
+    /// </summary>
+    /// <param name="_logger"></param>
     public class Class1(ILogger<Class1> _logger) : ICapSubscribe, ITransientDependency
     {
         //订阅事件

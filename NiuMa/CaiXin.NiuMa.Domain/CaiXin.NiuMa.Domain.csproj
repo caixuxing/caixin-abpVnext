@@ -7,13 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Employees\Repo\**" />
+    <Compile Remove="Employees\VO\**" />
+    <EmbeddedResource Remove="Employees\Repo\**" />
+    <EmbeddedResource Remove="Employees\VO\**" />
+    <None Remove="Employees\Repo\**" />
+    <None Remove="Employees\VO\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Framework\CaiXin.Domain\CaiXin.Domain.csproj" />
     <ProjectReference Include="..\CaiXin.NiuMa.Domain.Shared\CaiXin.NiuMa.Domain.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Employees\VO\" />
-    <Folder Include="Employees\Repo\" />
     <Folder Include="Member\DomainServices\" />
     <Folder Include="Department\" />
   </ItemGroup>
