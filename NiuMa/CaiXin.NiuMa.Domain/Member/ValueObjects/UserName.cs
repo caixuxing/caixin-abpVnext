@@ -1,11 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
 namespace CaiXin.NiuMa.Domain.Member.ValueObjects;
 
-[ComplexType]
-public record UserName([property: Column("Name")] string Value)
+
+public record UserName(string Value)
 {
     public static UserName Create(string value)
     {
@@ -27,10 +26,8 @@ public record UserName([property: Column("Name")] string Value)
 /// </summary>
 /// <param name="Hash"></param>
 /// <param name="Salt"></param>
-[ComplexType]
-public record UserPassword(
-    [property: Column("Password")] string Password,
-      [property: Column("Salt")] string Salt)
+
+public record UserPassword(string Password, string Salt)
 {
     public static UserPassword Create(string plainPassword)
     {

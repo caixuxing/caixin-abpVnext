@@ -32,27 +32,12 @@ internal sealed class MemberApp(ILocalEventBus localEventBus,
         var user = User.Create(guidGenerator.Create(), cmd.Name, "123456");
         //添加到仓储
         await userRepository.InsertAsync(user);
-
-        await userRepository.TestSql(user, (name, pwd, salt) => buildSql(name, pwd, salt));
-
         //发布本地耗时任务事件
         await localEventBus.PublishAsync(new MemberRegistrationEto(1, 1136, "15580808032", 100), false);
         //发布Cap 用户创建事件
         await distributedEventBus.PublishAsync(new MemberRegistrationEtos() { Id = 336, EventName = "test" });
-
         //工作单元提交
         await CurrentUnitOfWork!.SaveChangesAsync(token);
-
-
-        var rows = await userRepository.FindAsync(w => w.Id == Guid.NewGuid(), false, token) ?? throw new Exception("用户资源不存在,无法执行更新操作");
-        rows.ChangePassword("9527");
-        //工作单元提交
-        await CurrentUnitOfWork!.SaveChangesAsync(token);
-
-
-
-        // 1. 获取 DbContext
-        var dbContext = await _dbContextProvider.GetDbContextAsync();
 
         //返回
         return (new() { Code = 200, Data = "成功", Message = "" });
@@ -85,9 +70,4 @@ internal sealed class MemberApp(ILocalEventBus localEventBus,
         return result;
     }
 
-    private Task<string> buildSql(string name, string pwd, string salt)
-    {
-        var sql = $"INSERT INTO `user` (`id`, `name`, `password`, `salt`) VALUES ('{guidGenerator.Create()}', '{name}', '{pwd}', '{salt}');";
-        return Task.FromResult(sql);
-    }
 }

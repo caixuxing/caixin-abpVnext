@@ -11,4 +11,8 @@
     <ProjectReference Include="..\CaiXin.NiuMa.Domain.Shared\CaiXin.NiuMa.Domain.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="EmployeeApp\Dto\" />
+  </ItemGroup>
+
 </Project>

@@ -11,5 +11,6 @@ public class HomeController(IMemberApp memberApp) : AbpController
     public IActionResult Index() => View();
 
     [HttpPost, Route("/create")]
-    public async Task<IResult> Create([FromBody] MemberRegistrationDto request, CancellationToken token) => Results.Ok(await memberApp.MemberRegistrationAsync(request, token));
+    public async Task<IResult> Create([FromBody] MemberRegistrationDto request, CancellationToken token)
+        => Results.Ok(await memberApp.MemberRegistrationAsync(request, token));
 }

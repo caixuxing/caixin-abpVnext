@@ -12,7 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Employees\VO\" />
+    <Folder Include="Employees\Repo\" />
     <Folder Include="Member\DomainServices\" />
+    <Folder Include="Department\" />
   </ItemGroup>
 
   <ItemGroup>

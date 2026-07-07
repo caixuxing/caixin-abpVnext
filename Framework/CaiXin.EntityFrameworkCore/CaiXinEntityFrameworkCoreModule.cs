@@ -7,6 +7,7 @@ using Volo.Abp.Dapper;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.SqlServer;
+using Volo.Abp.Guids;
 using Volo.Abp.Modularity;
 
 namespace CaiXin.EntityFrameworkCore
@@ -28,10 +29,21 @@ namespace CaiXin.EntityFrameworkCore
                 options.ConnectionStrings.Default = configuration.GetConnectionString("Default");
             });
 
+            Configure<AbpSequentialGuidGeneratorOptions>(options =>
+            {
+                // 对 SQL Server 使用 SequentialAtEnd，MySQL/PostgreSQL 建议使用 SequentialAsString
+                options.DefaultSequentialGuidType = SequentialGuidType.SequentialAtEnd;
+            });
+
             Configure<AbpDbContextOptions>(options =>
             {
                 options.UseSqlServer();
             });
+
+
+
+
+
 
             context.Services.AddAbpDbContext<CaiXinContext>(options =>
             {

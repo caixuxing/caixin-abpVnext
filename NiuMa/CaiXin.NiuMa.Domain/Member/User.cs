@@ -1,22 +1,57 @@
 ﻿using CaiXin.NiuMa.Domain.Member.ValueObjects;
+using Volo.Abp.Auditing;
 using Volo.Abp.Domain.Entities;
+using Volo.Abp.MultiTenancy;
 
 namespace CaiXin.NiuMa.Domain.Member;
 
-public class User : Entity<Guid>
+public class User : AggregateRoot<Guid>, IFullAuditedObject<string>, IMultiTenant
 {
     public UserName Name { get; init; } = null!;
 
     public UserPassword Password { get; private set; } = null!;
 
+    public Guid? TenantId { get; init; }
+
+
+    public Guid? CreatorId { get; init; }
+
+    public string? Creator { get; init; }
+
+    public DateTime CreationTime { get; init; }
+
+
+
+    public Guid? LastModifierId { get; set; }
+
+    public string? LastModifier { get; set; }
+
+    public DateTime? LastModificationTime { get; set; }
+
+
+
+    public Guid? DeleterId { get; set; }
+
+    public string? Deleter { get; set; }
+
+    public DateTime? DeletionTime { get; set; }
+
+    public bool IsDeleted { get; set; }
+
+
+
+
     private User()
     { }
 
-    private User(Guid id, UserName name, UserPassword password)
+
+    private User(Guid id, UserName userName, UserPassword password)
+        : base(id)
     {
-        Name = name;
+        Name = userName;
         Password = password;
-        Id = id;
+        // 添加事件
+        AddLocalEvent(new { userName = userName });
     }
 
     /// <summary>
@@ -30,7 +65,9 @@ public class User : Entity<Guid>
     {
         var userName = UserName.Create(name);
         var password = UserPassword.Create(pwd);
-        return new User(id, userName, password);
+        var user = new User(id, userName, password);
+        user.AddLocalEvent(new { });
+        return user;
     }
 
     /// <summary>
