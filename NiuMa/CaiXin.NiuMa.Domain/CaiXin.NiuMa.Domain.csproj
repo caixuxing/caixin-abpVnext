@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Employees\Validators\" />
     <Folder Include="Member\DomainServices\" />
     <Folder Include="Department\" />
   </ItemGroup>
