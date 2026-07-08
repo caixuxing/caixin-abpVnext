@@ -13,8 +13,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace CaiXin.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(CaiXinContext))]
-    [Migration("20260707091103_init2")]
-    partial class init2
+    [Migration("20260708025951_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,7 +75,7 @@ namespace CaiXin.EntityFrameworkCore.Migrations
 
                     b.Property<string>("EmployeeNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ExtraProperties")
                         .IsRequired()
@@ -124,6 +124,9 @@ namespace CaiXin.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EmployeeNumber")
+                        .IsUnique();
+
                     b.ToTable("Employee", null, t =>
                         {
                             t.HasComment("员工信息表");
@@ -140,33 +143,50 @@ namespace CaiXin.EntityFrameworkCore.Migrations
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2")
-                        .HasColumnName("CreationTime");
+                        .HasColumnName("CreationTime")
+                        .HasComment("创建时间");
 
-                    b.Property<Guid>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<Guid?>("EmployeeId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("EmployeeId")
+                        .HasComment("所属员工ID");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                        .HasColumnType("bit")
+                        .HasColumnName("IsActive")
+                        .HasComment("是否激活");
 
                     b.Property<DateTime?>("LastLoginTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastLoginTime")
+                        .HasComment("最后登录时间");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("PasswordHash")
+                        .HasComment("密码");
 
                     b.Property<string>("Salt")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("Salt")
+                        .HasComment("盐值");
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("UserName")
+                        .HasComment("用户名");
 
                     b.HasKey("Id");
 
                     b.HasIndex("EmployeeId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[EmployeeId] IS NOT NULL");
 
                     b.ToTable("SysUser", null, t =>
                         {
@@ -259,8 +279,7 @@ namespace CaiXin.EntityFrameworkCore.Migrations
                     b.HasOne("CaiXin.NiuMa.Domain.Employees.Employee", "Employee")
                         .WithOne("SysUser")
                         .HasForeignKey("CaiXin.NiuMa.Domain.Employees.Entity.SysUser", "EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Employee");
                 });
@@ -323,8 +342,7 @@ namespace CaiXin.EntityFrameworkCore.Migrations
 
             modelBuilder.Entity("CaiXin.NiuMa.Domain.Employees.Employee", b =>
                 {
-                    b.Navigation("SysUser")
-                        .IsRequired();
+                    b.Navigation("SysUser");
                 });
 #pragma warning restore 612, 618
         }

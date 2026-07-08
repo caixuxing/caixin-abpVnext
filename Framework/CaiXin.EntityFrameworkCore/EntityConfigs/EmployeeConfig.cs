@@ -19,6 +19,10 @@ namespace CaiXin.EntityFrameworkCore.EntityConfigs
 
             builder.Property(t => t.Deleter).HasColumnName("Deleter").HasMaxLength(20).HasComment("删除者");
 
+
+            // 索引
+            builder.HasIndex(e => e.EmployeeNumber).IsUnique();
+
         }
     }
 }

@@ -8,12 +8,11 @@ public class SysUser : Entity<Guid>, IHasCreationTime
     /// <summary>
     /// 所属员工ID
     /// </summary>
-    public Guid EmployeeId { get; init; }
+    public Guid? EmployeeId { get; init; }
 
-    /// <summary>
-    /// 员工
-    /// </summary>
-    public virtual Employee Employee { get; private set; } = null!;
+
+    public virtual Employee? Employee { get; private set; }
+
 
     /// <summary>
     /// 登录用户名

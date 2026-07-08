@@ -50,8 +50,7 @@ namespace CaiXin.NiuMa.Domain.Employees
         /// <summary>
         /// 系统用户
         /// </summary>
-
-        public virtual SysUser SysUser { get; private set; } = null!;
+        public virtual SysUser? SysUser { get; private set; }
 
         public Guid? TenantId { get; init; }
 

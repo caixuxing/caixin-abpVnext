@@ -30,7 +30,7 @@ namespace CaiXin.BackgroundJob
                     Db = redisDb                     // 指定 Redis 数据库索引
                 });
             });
-            
+
             // context.Services.AddHangfireServer(options =>
             // {
             //     options.Queues = new[] { "default", "critical", "email"  };
@@ -41,8 +41,8 @@ namespace CaiXin.BackgroundJob
             //
             //
             // });
-            
-            
+
+
             // 添加 Hangfire 服务器（必须调用）
             context.Services.AddHangfireServer(options =>
             {
@@ -58,9 +58,9 @@ namespace CaiXin.BackgroundJob
         public override Task OnApplicationInitializationAsync(ApplicationInitializationContext context)
         {
             var app = context.GetApplicationBuilder();
-            
+
             // 启用 Hangfire Dashboard（可选）
-            app.UseHangfireDashboard("/hangfire", new DashboardOptions
+            app?.UseHangfireDashboard("/hangfire", new DashboardOptions
             {
                 // 如需添加认证，可配置 Authorization 选项
                 // Authorization = new[] { new BasicAuthAuthorizationFilter(...) }
