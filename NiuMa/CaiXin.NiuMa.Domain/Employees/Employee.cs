@@ -1,5 +1,6 @@
 ﻿using CaiXin.NiuMa.Domain.Employees.Entity;
 using CaiXin.NiuMa.Domain.Employees.EventDto;
+using CaiXin.NiuMa.Domain.Employees.Validations;
 using CaiXin.NiuMa.Domain.Member.ValueObjects;
 using Volo.Abp.Auditing;
 using Volo.Abp.Domain.Entities;
@@ -87,13 +88,7 @@ namespace CaiXin.NiuMa.Domain.Employees
         /// <exception cref="ArgumentException"></exception>
         public static Employee Create(Guid id, string employeeNumber, string fullName, string? email, string? phoneNumber, DateTime hireDate)
         {
-            if (string.IsNullOrWhiteSpace(employeeNumber))
-                throw new ArgumentException("工号不能为空", nameof(employeeNumber));
-            if (string.IsNullOrWhiteSpace(fullName))
-                throw new ArgumentException("姓名不能为空", nameof(fullName));
-
             var (Password, Salt) = UserPassword.Create("123456");
-
             var employee = new Employee
             {
                 Id = id,
@@ -103,8 +98,9 @@ namespace CaiXin.NiuMa.Domain.Employees
                 PhoneNumber = phoneNumber,
                 HireDate = hireDate,
                 Status = 1,
-                SysUser = SysUser.Create(id, "ccx", Password, Salt)
+                SysUser = SysUser.Create(id, employeeNumber, Password, Salt)
             };
+            employee.Validate();
             employee.AddLocalEvent(new CreateEmployeeEto
             {
                 Id = employee.Id,

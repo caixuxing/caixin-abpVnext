@@ -2,7 +2,6 @@
 using CaiXin.NiuMa.Application.Contracts.EmployeeApp;
 using CaiXin.NiuMa.Application.Contracts.EmployeeApp.Cmd;
 using CaiXin.NiuMa.Domain.Employees;
-using CaiXin.NiuMa.Domain.Employees.Entity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -15,29 +14,16 @@ namespace CaiXin.NiuMa.Application.EmployeeApp
     [ExposeServices(typeof(IEmployeeApp))]
     [UnitOfWork]
     internal sealed class EmployeeApp(IRepository<Employee, Guid> employeeRepo,
-                                      IRepository<SysUser, Guid> userRepo,
                                       IGuidGenerator guid,
                                       IConnectionStringResolver _connectionStringResolver) : ApplicationService, IEmployeeApp, ITransientDependency
     {
         public async Task<string> AddEmployee(CreateEmployeeCmd cmd, CancellationToken token)
         {
-
-            try
-            {
-
-                string nextSeq = await GenerateNextEmployeeNumberAsync(token);
-
-                Employee employee = Employee.Create(guid.Create(), nextSeq, cmd.FullName, cmd.Email, cmd.PhoneNumber, cmd.HireDate);
-                await employeeRepo.InsertAsync(employee, cancellationToken: token);
-                if (employee.SysUser is not null)
-                    await userRepo.InsertAsync(employee.SysUser, cancellationToken: token);
-                await CurrentUnitOfWork!.SaveChangesAsync(token);
-                return employee.Id.ToString();
-            }
-            catch (Exception ex)
-            {
-                throw new BusinessException("添加员工失败");
-            }
+            string nextSeq = await GenerateNextEmployeeNumberAsync(token);
+            Employee employee = Employee.Create(guid.Create(), nextSeq, cmd.FullName, cmd.Email, cmd.PhoneNumber, cmd.HireDate);
+            await employeeRepo.InsertAsync(employee, cancellationToken: token);
+            await CurrentUnitOfWork!.SaveChangesAsync(token);
+            return employee.Id.ToString();
         }
 
         public async Task GetEmployeeById(Guid id)
@@ -49,14 +35,12 @@ namespace CaiXin.NiuMa.Application.EmployeeApp
             await Task.CompletedTask;
         }
 
-
-
-
         /// <summary>
         /// 生成下一个员工工号
         /// </summary>
-        /// <returns>格式化的工号，如 "EMP00010001"</returns>
-        /// <exception cref="BusinessException">当数据库操作失败时抛出</exception>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        /// <exception cref="BusinessException"></exception>
         private async Task<string> GenerateNextEmployeeNumberAsync(CancellationToken token)
         {
             try

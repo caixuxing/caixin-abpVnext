@@ -17,4 +17,5 @@ namespace CaiXin.NiuMa.Domain.Employees.Specifications
             return employee => employee.HireDate.AddYears(1) <= DateTime.Now;
         }
     }
+
 }
