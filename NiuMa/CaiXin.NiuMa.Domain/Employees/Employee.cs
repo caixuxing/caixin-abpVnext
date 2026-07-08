@@ -101,13 +101,7 @@ namespace CaiXin.NiuMa.Domain.Employees
                 SysUser = SysUser.Create(id, employeeNumber, Password, Salt)
             };
             employee.Validate();
-            employee.AddLocalEvent(new CreateEmployeeEto
-            {
-                Id = employee.Id,
-                EmployeeNumber = employeeNumber,
-                FullName = fullName,
-            });
-
+            employee.AddLocalEvent(new CreateEmployeeEto { Id = employee.Id, EmployeeNumber = employeeNumber, FullName = fullName });
             return employee;
         }
 
