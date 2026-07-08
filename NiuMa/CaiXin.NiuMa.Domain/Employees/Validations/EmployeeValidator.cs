@@ -1,4 +1,7 @@
-﻿using FluentValidation;
+﻿using CaiXin.Domain.Shared.Response;
+using FluentValidation;
+using System.ComponentModel.DataAnnotations;
+using Volo.Abp.Validation;
 
 namespace CaiXin.NiuMa.Domain.Employees.Validations
 {
@@ -30,8 +33,6 @@ namespace CaiXin.NiuMa.Domain.Employees.Validations
         }
     }
 
-
-
     public static class EmployeeValidationExtensions
     {
         private static readonly IValidator<Employee> Validator = new CreateEmployeeValidator();
@@ -39,18 +40,35 @@ namespace CaiXin.NiuMa.Domain.Employees.Validations
         public static void Validate(this Employee employee)
         {
             var result = Validator.Validate(employee);
-            if (!result.IsValid) throw new Exception(string.Join("; ", result.Errors.Select(e => e.ErrorMessage)));
-        }
+            if (!result.IsValid)
+            {
+                // 构建详细的验证错误信息
+                var validationErrors = result.Errors.Select(e => new ValidationErrorDetail
+                {
+                    Property = e.PropertyName,
+                    Message = e.ErrorMessage,
+                    ErrorCode = e.ErrorCode ?? "ValidationError",
+                    AttemptedValue = e.AttemptedValue,
+                    Severity = e.Severity.ToString()
+                }).ToList();
 
-        public static bool IsValid(this Employee employee)
-        {
-            return Validator.Validate(employee).IsValid;
-        }
+                // ✅ 使用 System.ComponentModel.DataAnnotations.ValidationResult
+                var validationResults = result.Errors.Select(e =>
+                    new ValidationResult(e.ErrorMessage, new[] { e.PropertyName })
+                ).ToList();
 
-        public static IReadOnlyList<string> GetValidationErrors(this Employee employee)
-        {
-            var result = Validator.Validate(employee);
-            return result.Errors.Select(e => e.ErrorMessage).ToList();
+                // 创建 AbpValidationException
+                var exception = new AbpValidationException(
+                    message: "Employee validation failed",
+                    validationErrors: validationResults
+                );
+
+                // 将详细错误信息附加到 Data（供过滤器使用）
+                exception.Data["ValidationErrors"] = validationErrors;
+                exception.Data["ErrorCount"] = validationErrors.Count;
+
+                throw exception;
+            }
         }
     }
 }

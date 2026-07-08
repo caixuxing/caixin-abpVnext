@@ -1,8 +1,10 @@
 using CaiXin.NiuMa.Application;
 using CaiXin.NiuMa.Application.Contracts;
 using CaiXin.NiuMa.Domain.Shared.Response;
+using CaiXin.NiuMa.WebUI.Filter;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.OpenApi.Models;
 using NUglify.Helpers;
@@ -11,6 +13,7 @@ using System.Net;
 using System.Reflection;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
+using Volo.Abp.AspNetCore.Mvc.ExceptionHandling;
 using Volo.Abp.Autofac;
 using Volo.Abp.Modularity;
 
@@ -38,11 +41,20 @@ namespace CaiXin.NiuMa.WebUI
             // context.Services.AddFluentValidationClientsideAdapters();
             context.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
+            context.Services.AddTransient<ResultExceptionFilter>();
+            context.Services.AddTransient<ResultWrapperFilter>();
+
             context.Services.AddControllersWithViews(opt =>
             {
-                opt.ModelValidatorProviders.Clear();
-                //opt.Filters.Add(typeof(ResultExceptionFilter));
-                opt.EnableEndpointRouting = false;
+                //opt.ModelValidatorProviders.Clear();
+
+
+                // ✅ 添加包装过滤器（先执行）
+                opt.Filters.Add(new ServiceFilterAttribute(typeof(ResultWrapperFilter)));
+                // ✅ 添加异常过滤器（后执行，仅处理异常）
+                opt.Filters.Add(new ServiceFilterAttribute(typeof(ResultExceptionFilter)));
+
+                //opt.EnableEndpointRouting = false;
             }).AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
 
             context.Services.AddHttpContextAccessor();

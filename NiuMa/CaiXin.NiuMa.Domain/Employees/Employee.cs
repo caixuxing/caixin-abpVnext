@@ -8,8 +8,6 @@ using Volo.Abp.MultiTenancy;
 
 namespace CaiXin.NiuMa.Domain.Employees;
 
-
-
 /// <summary>
 /// 员工
 /// </summary>
@@ -77,13 +75,9 @@ public partial class Employee : AggregateRoot<Guid>, IFullAuditedObject<string>,
 
     public bool IsDeleted { get; set; }
 
-
     private Employee()
     {
-
     }
-
-
 }
 
 public partial class Employee
@@ -107,6 +101,7 @@ public partial class Employee
             Id = id,
             EmployeeNumber = employeeNumber,
             FullName = fullName,
+            Nickname = fullName,
             Email = email,
             PhoneNumber = phoneNumber,
             HireDate = hireDate,
