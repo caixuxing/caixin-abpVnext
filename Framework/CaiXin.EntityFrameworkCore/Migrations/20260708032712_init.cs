@@ -11,6 +11,10 @@ namespace CaiXin.EntityFrameworkCore.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateSequence<int>(
+                name: "EmployeeNumberSeq",
+                startValue: 10001L);
+
             migrationBuilder.CreateTable(
                 name: "Employee",
                 columns: table => new
@@ -121,6 +125,9 @@ namespace CaiXin.EntityFrameworkCore.Migrations
 
             migrationBuilder.DropTable(
                 name: "Employee");
+
+            migrationBuilder.DropSequence(
+                name: "EmployeeNumberSeq");
         }
     }
 }

@@ -13,7 +13,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace CaiXin.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(CaiXinContext))]
-    [Migration("20260708025951_init")]
+    [Migration("20260708032712_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -26,6 +26,9 @@ namespace CaiXin.EntityFrameworkCore.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.HasSequence<int>("EmployeeNumberSeq")
+                .StartsAt(10001L);
 
             modelBuilder.Entity("CaiXin.NiuMa.Domain.Employees.Employee", b =>
                 {

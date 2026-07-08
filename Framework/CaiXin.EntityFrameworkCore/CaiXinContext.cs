@@ -20,6 +20,12 @@ namespace CaiXin.EntityFrameworkCore
 
             // 方式2：如果你有多个配置，可以扫描程序集自动注册（见下文）
             builder.ApplyConfigurationsFromAssembly(typeof(CaiXinContext).Assembly);
+
+
+            builder.HasSequence<int>("EmployeeNumberSeq")
+           .StartsAt(10001)
+           .IncrementsBy(1);
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

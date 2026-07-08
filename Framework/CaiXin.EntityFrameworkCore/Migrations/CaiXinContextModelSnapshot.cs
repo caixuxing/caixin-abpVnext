@@ -24,6 +24,9 @@ namespace CaiXin.EntityFrameworkCore.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.HasSequence<int>("EmployeeNumberSeq")
+                .StartsAt(10001L);
+
             modelBuilder.Entity("CaiXin.NiuMa.Domain.Employees.Employee", b =>
                 {
                     b.Property<Guid>("Id")
