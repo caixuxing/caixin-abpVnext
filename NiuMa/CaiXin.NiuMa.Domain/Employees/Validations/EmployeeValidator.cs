@@ -5,7 +5,7 @@ using Volo.Abp.Validation;
 
 namespace CaiXin.NiuMa.Domain.Employees.Validations
 {
-    public class CreateEmployeeValidator : AbstractValidator<Employee>
+    public class CreateEmployeeValidator : AbstractValidator<EmployeeAgg>
     {
         public CreateEmployeeValidator()
         {
@@ -35,9 +35,9 @@ namespace CaiXin.NiuMa.Domain.Employees.Validations
 
     public static class EmployeeValidationExtensions
     {
-        private static readonly IValidator<Employee> Validator = new CreateEmployeeValidator();
+        private static readonly IValidator<EmployeeAgg> Validator = new CreateEmployeeValidator();
 
-        public static void Validate(this Employee employee)
+        public static void Validate(this EmployeeAgg employee)
         {
             var result = Validator.Validate(employee);
             if (!result.IsValid)

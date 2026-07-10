@@ -11,6 +11,6 @@ namespace CaiXin.EntityFrameworkCore
 
         public DbSet<SysUser> SysUsers { get; set; }
 
-        public DbSet<Employee> Employees { get; set; }
+        public DbSet<EmployeeAgg> Employees { get; set; }
     }
 }

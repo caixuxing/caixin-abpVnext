@@ -11,7 +11,7 @@ namespace CaiXin.NiuMa.Domain.Employees;
 /// <summary>
 /// 员工
 /// </summary>
-public partial class Employee : AggregateRoot<Guid>, IFullAuditedObject<string>, IMultiTenant
+public partial class EmployeeAgg : AggregateRoot<Guid>, IFullAuditedObject<string>, IMultiTenant
 {
     /// <summary>
     /// 员工编号
@@ -75,13 +75,10 @@ public partial class Employee : AggregateRoot<Guid>, IFullAuditedObject<string>,
 
     public bool IsDeleted { get; set; }
 
-    private Employee()
+    private EmployeeAgg()
     {
     }
-}
 
-public partial class Employee
-{
     /// <summary>
     /// 创建员工
     /// </summary>
@@ -93,10 +90,10 @@ public partial class Employee
     /// <param name="hireDate">入职日期</param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
-    public static Employee Create(Guid id, string employeeNumber, string fullName, string? email, string? phoneNumber, DateTime hireDate)
+    public static EmployeeAgg Create(Guid id, string employeeNumber, string fullName, string? email, string? phoneNumber, DateTime hireDate)
     {
         var (Password, Salt) = UserPassword.Create("123456");
-        var employee = new Employee
+        var employee = new EmployeeAgg
         {
             Id = id,
             EmployeeNumber = employeeNumber,
@@ -123,3 +120,4 @@ public partial class Employee
         SysUser?.Deactivate();
     }
 }
+

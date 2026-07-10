@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace CaiXin.EntityFrameworkCore.EntityConfigs
 {
 
-    public class EmployeeConfig : IEntityTypeConfiguration<Employee>
+    public class EmployeeConfig : IEntityTypeConfiguration<EmployeeAgg>
     {
-        public void Configure(EntityTypeBuilder<Employee> builder)
+        public void Configure(EntityTypeBuilder<EmployeeAgg> builder)
         {
             builder.ToTable("Employee", t => t.HasComment("员工信息表"));
             builder.HasKey(p => p.Id);

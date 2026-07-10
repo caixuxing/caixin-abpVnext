@@ -11,7 +11,7 @@ public class SysUser : Entity<Guid>, IHasCreationTime
     public Guid? EmployeeId { get; init; }
 
 
-    public virtual Employee? Employee { get; private set; }
+    public virtual EmployeeAgg? Employee { get; private set; }
 
 
     /// <summary>
