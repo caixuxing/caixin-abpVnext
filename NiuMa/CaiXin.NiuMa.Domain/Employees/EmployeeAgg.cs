@@ -79,6 +79,11 @@ public partial class EmployeeAgg : AggregateRoot<Guid>, IFullAuditedObject<strin
     {
     }
 
+
+}
+
+public partial class EmployeeAgg
+{
     /// <summary>
     /// 创建员工
     /// </summary>
