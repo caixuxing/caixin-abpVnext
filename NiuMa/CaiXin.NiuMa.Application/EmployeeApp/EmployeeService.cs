@@ -26,12 +26,6 @@ internal sealed class EmployeeApp(IGuidGenerator guid,
         return employee.Id.ToString();
     }
 
-    /// <summary>
-    /// 按Id查询员工信息
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentException"></exception>
     public async Task<EmployeeDto> GetById(Guid id)
     {
         var data = await employeeRepository.FindAsync(id);
