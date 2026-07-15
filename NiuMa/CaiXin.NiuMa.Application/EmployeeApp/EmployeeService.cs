@@ -11,9 +11,8 @@ using Volo.Abp.Guids;
 namespace CaiXin.NiuMa.Application.EmployeeApp;
 
 
-[UnitOfWork]
 [ExposeServices(typeof(IEmployeeService))]
-internal sealed class EmployeeApp(IGuidGenerator guid,
+internal class EmployeeApp(IGuidGenerator guid,
                                   IConnectionStringResolver _connectionStringResolver,
                                   IEmployeeRepository employeeRepository) : ApplicationService, IEmployeeService
 {
@@ -22,7 +21,6 @@ internal sealed class EmployeeApp(IGuidGenerator guid,
         string nextSeq = await GenerateNextEmployeeNumberAsync(token);
         EmployeeAgg employee = EmployeeAgg.Create(guid.Create(), nextSeq, cmd.FullName, cmd.Email, cmd.PhoneNumber, cmd.HireDate);
         await employeeRepository.InsertAsync(employee, cancellationToken: token);
-        await CurrentUnitOfWork!.SaveChangesAsync(token);
         return employee.Id.ToString();
     }
 
