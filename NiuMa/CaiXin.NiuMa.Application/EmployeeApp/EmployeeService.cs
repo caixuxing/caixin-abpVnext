@@ -49,10 +49,8 @@ internal class EmployeeApp(IGuidGenerator guid,
             employee.Id.ToString(),
             CorePermissions.Employees.Update);
 
-        if (!authorizationResult.Succeeded)
-        {
-            throw new AbpAuthorizationException("没有权限更新该员工信息");
-        }
+        if (!authorizationResult.Succeeded) throw new AbpAuthorizationException("没有权限更新该员工信息");
+
         employee.Resign(DateTime.Now);
         await employeeRepository.UpdateAsync(employee, cancellationToken: token);
     }
