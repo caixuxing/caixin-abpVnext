@@ -25,7 +25,7 @@ namespace CaiXin.NiuMa.Domain.Employees.Validations
                 .Matches(@"^1[3-9]\d{9}$").WithMessage("手机号格式不正确")
                 .When(x => !string.IsNullOrEmpty(x.PhoneNumber));
 
-            RuleFor(x => x.HireDate)
+            RuleFor(x => x.HireDate.Date)
                 .LessThanOrEqualTo(DateTime.Today).WithMessage("入职日期不能晚于今天");
 
             //RuleFor(x => x.Status)
