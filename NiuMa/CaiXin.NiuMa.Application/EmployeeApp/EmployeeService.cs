@@ -54,7 +54,7 @@ internal class EmployeeApp(IGuidGenerator guid,
         var configData = settings.Value;
         var data = await employeeRepository.FindAsync(id);
         var query = await employeeRepository.GetQueryableAsync();
-        var employeeaAll = await query.Include(e => e.SysUser).FirstOrDefaultAsync(e => e.Id == id) ?? throw new ArgumentException("Employee not found");
+        var employeeaAll = await query.Include(e => e.SysUser).FirstOrDefaultAsync(e => e.Id == id) ?? throw new UserFriendlyException("Employee not found");
         var result = employeeaAll.Adapt<EmployeeDto>();
         return result;
     }
