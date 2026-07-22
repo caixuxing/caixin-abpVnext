@@ -1,4 +1,4 @@
-﻿namespace CaiXin.NiuMa.Host.Configs
+﻿namespace CaiXin.NiuMa.Domain.Shared.Config
 {
     /// <summary>
     /// 私有云

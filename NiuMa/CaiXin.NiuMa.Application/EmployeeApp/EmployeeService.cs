@@ -4,9 +4,11 @@ using CaiXin.NiuMa.Application.Contracts.EmployeeApp.Cmd;
 using CaiXin.NiuMa.Application.Contracts.EmployeeApp.Dto;
 using CaiXin.NiuMa.Application.Contracts.Permissions;
 using CaiXin.NiuMa.Domain.Employees;
+using CaiXin.NiuMa.Domain.Shared.Config;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Volo.Abp;
 using Volo.Abp.Authorization;
 using Volo.Abp.Data;
@@ -18,10 +20,11 @@ namespace CaiXin.NiuMa.Application.EmployeeApp;
 [ExposeServices(typeof(IEmployeeService))]
 [Authorize(CorePermissions.Employees.Default)]
 internal class EmployeeApp(IGuidGenerator guid,
-                                  IConnectionStringResolver _connectionStringResolver,
-                                  IEmployeeRepository employeeRepository,
-                                   IAuthorizationService _authorizationService,
-                                   ICurrentPrincipalAccessor _currentPrincipalAccessor) : ApplicationService, IEmployeeService
+                           IConnectionStringResolver _connectionStringResolver,
+                           IEmployeeRepository employeeRepository,
+                           IAuthorizationService _authorizationService,
+                           ICurrentPrincipalAccessor _currentPrincipalAccessor,
+                           IOptionsSnapshot<PrivateColud> settings) : ApplicationService, IEmployeeService
 {
 
     [AllowAnonymous]
@@ -59,6 +62,10 @@ internal class EmployeeApp(IGuidGenerator guid,
     [AllowAnonymous]
     public async Task<EmployeeDto> GetById(Guid id)
     {
+        //配置文件信息
+        var configData = settings.Value;
+
+
         var data = await employeeRepository.FindAsync(id);
         var query = await employeeRepository.GetQueryableAsync();
         var employeeaAll = await query.Include(e => e.SysUser).FirstOrDefaultAsync(e => e.Id == id) ?? throw new ArgumentException("Employee not found");
