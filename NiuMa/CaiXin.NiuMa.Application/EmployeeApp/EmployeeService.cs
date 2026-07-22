@@ -35,35 +35,23 @@ internal class EmployeeApp(IGuidGenerator guid,
         await employeeRepository.InsertAsync(employee, cancellationToken: token);
         return employee.Id.ToString();
     }
-
-    /// <summary>
-    /// 更新员工信息 - 自动进行资源级权限检查
-    /// </summary>
     [Authorize(CorePermissions.Employees.Update)]
     public async Task Update(Guid id, CreateEmployeeCmd cmd, CancellationToken token)
     {
         var employee = await employeeRepository.FindAsync(id) ?? throw new UserFriendlyException("员工不存在");
-
         var authorizationResult = await _authorizationService.AuthorizeAsync(
             _currentPrincipalAccessor.Principal,
             employee.Id.ToString(),
             CorePermissions.Employees.Update);
-
         if (!authorizationResult.Succeeded) throw new AbpAuthorizationException("没有权限更新该员工信息");
-
         employee.Resign(DateTime.Now);
         await employeeRepository.UpdateAsync(employee, cancellationToken: token);
     }
 
-
-
     [AllowAnonymous]
     public async Task<EmployeeDto> GetById(Guid id)
     {
-        //配置文件信息
         var configData = settings.Value;
-
-
         var data = await employeeRepository.FindAsync(id);
         var query = await employeeRepository.GetQueryableAsync();
         var employeeaAll = await query.Include(e => e.SysUser).FirstOrDefaultAsync(e => e.Id == id) ?? throw new ArgumentException("Employee not found");
