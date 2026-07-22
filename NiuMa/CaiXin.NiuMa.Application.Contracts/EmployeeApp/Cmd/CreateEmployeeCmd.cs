@@ -20,4 +20,5 @@
         public DateTime HireDate { get; set; }
 
     }
+
 }

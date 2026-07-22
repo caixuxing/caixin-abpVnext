@@ -2,20 +2,29 @@
 using CaiXin.NiuMa.Application.Contracts.EmployeeApp;
 using CaiXin.NiuMa.Application.Contracts.EmployeeApp.Cmd;
 using CaiXin.NiuMa.Application.Contracts.EmployeeApp.Dto;
+using CaiXin.NiuMa.Application.Contracts.Permissions;
 using CaiXin.NiuMa.Domain.Employees;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp;
+using Volo.Abp.Authorization;
 using Volo.Abp.Data;
 using Volo.Abp.Guids;
+using Volo.Abp.Security.Claims;
 namespace CaiXin.NiuMa.Application.EmployeeApp;
 
 
 [ExposeServices(typeof(IEmployeeService))]
+[Authorize(CorePermissions.Employees.Default)]
 internal class EmployeeApp(IGuidGenerator guid,
                                   IConnectionStringResolver _connectionStringResolver,
-                                  IEmployeeRepository employeeRepository) : ApplicationService, IEmployeeService
+                                  IEmployeeRepository employeeRepository,
+                                   IAuthorizationService _authorizationService,
+                                   ICurrentPrincipalAccessor _currentPrincipalAccessor) : ApplicationService, IEmployeeService
 {
+
+    [AllowAnonymous]
     public async Task<string> Create(CreateEmployeeCmd cmd, CancellationToken token)
     {
         string nextSeq = await GenerateNextEmployeeNumberAsync(token);
@@ -24,6 +33,30 @@ internal class EmployeeApp(IGuidGenerator guid,
         return employee.Id.ToString();
     }
 
+    /// <summary>
+    /// 更新员工信息 - 自动进行资源级权限检查
+    /// </summary>
+    [Authorize(CorePermissions.Employees.Update)]
+    public async Task Update(Guid id, CreateEmployeeCmd cmd, CancellationToken token)
+    {
+        var employee = await employeeRepository.FindAsync(id) ?? throw new UserFriendlyException("员工不存在");
+
+        var authorizationResult = await _authorizationService.AuthorizeAsync(
+            _currentPrincipalAccessor.Principal,
+            employee.Id.ToString(),
+            CorePermissions.Employees.Update);
+
+        if (!authorizationResult.Succeeded)
+        {
+            throw new AbpAuthorizationException("没有权限更新该员工信息");
+        }
+        employee.Resign(DateTime.Now);
+        await employeeRepository.UpdateAsync(employee, cancellationToken: token);
+    }
+
+
+
+    [AllowAnonymous]
     public async Task<EmployeeDto> GetById(Guid id)
     {
         var data = await employeeRepository.FindAsync(id);

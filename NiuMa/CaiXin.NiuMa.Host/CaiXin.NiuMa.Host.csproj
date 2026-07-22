@@ -8,6 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Configs\PrivateColud.dev.json" />
+    <Content Remove="Configs\PrivateColud.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Configs\PrivateColud.dev.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Configs\PrivateColud.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="DotNetCore.CAP.Dashboard" Version="10.0.1" />
     <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="10.0.1" />
     <PackageReference Include="Volo.Abp.Autofac" Version="8.2.3" />

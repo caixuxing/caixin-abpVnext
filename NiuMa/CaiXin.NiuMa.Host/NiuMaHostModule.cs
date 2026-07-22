@@ -1,5 +1,6 @@
 ﻿using CaiXin.NiuMa.Application;
 using CaiXin.NiuMa.Application.Contracts;
+using CaiXin.NiuMa.Host.Configs;
 using CaiXin.NiuMa.Host.Filter;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -27,6 +28,19 @@ namespace CaiXin.NiuMa.Host
 
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
+
+
+            // 加载自定义配置
+            var configurationBuilder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("Configs/PrivateColud.json", optional: false, reloadOnChange: true);
+            var configuration = configurationBuilder.Build();
+            // 或者使用 IOptions（如果想要支持热更新）
+            context.Services.Configure<PrivateColud>(configuration);
+
+
+
+
             context.Services.AddControllers(opt =>
             {
                 //opt.ModelValidatorProviders.Clear();

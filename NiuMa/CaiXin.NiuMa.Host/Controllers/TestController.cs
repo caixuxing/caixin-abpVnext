@@ -2,7 +2,9 @@
 using CaiXin.NiuMa.Application.Contracts.EmployeeApp;
 using CaiXin.NiuMa.Application.Contracts.EmployeeApp.Cmd;
 using CaiXin.NiuMa.Application.Contracts.EmployeeApp.Dto;
+using CaiXin.NiuMa.Host.Configs;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Volo.Abp.AspNetCore.Mvc;
 
 namespace CaiXin.NiuMa.Host.Controllers
@@ -14,7 +16,8 @@ namespace CaiXin.NiuMa.Host.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [WrapResult]
-    public class TestController(IEmployeeService employeeService) : AbpController, IEmployeeService
+    public class TestController(IEmployeeService employeeService,
+                               IOptionsSnapshot<PrivateColud> settings) : AbpController, IEmployeeService
     {
 
 
@@ -32,7 +35,12 @@ namespace CaiXin.NiuMa.Host.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("GetEmployee/{id}")]
-        public Task<EmployeeDto> GetById(Guid id) => employeeService.GetById(id);
+        public Task<EmployeeDto> GetById(Guid id)
+        {
+            var data = settings.Value;
+            return employeeService.GetById(id);
+
+        }
 
 
 
