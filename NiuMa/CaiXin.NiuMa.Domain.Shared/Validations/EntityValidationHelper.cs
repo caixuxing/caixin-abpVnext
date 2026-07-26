@@ -14,7 +14,7 @@ public static class EntityValidationHelper
     /// <param name="entity">待验证的实体实例</param>
     /// <param name="validator">对应的验证器</param>
     /// <exception cref="AbpValidationException">验证失败时抛出</exception>
-    public static void Validate<T>(this T entity, IValidator<T> validator)
+    public static void Validate<T>(this T entity, IValidator<T> validator) where T : class
     {
         var result = validator.Validate(entity);
         if (!result.IsValid)
