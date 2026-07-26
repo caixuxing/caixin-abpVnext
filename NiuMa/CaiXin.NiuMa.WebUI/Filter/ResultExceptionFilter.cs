@@ -169,7 +169,7 @@ namespace CaiXin.NiuMa.WebUI.Filter
 
             result.SetFailWithData(
                 data: errorResponse,
-                message: "Request param validate failure！",
+                message: "参数校验未通过！",
                 code: statusCode > 0 ? statusCode : 400,
                 traceId: result.TraceId
             );

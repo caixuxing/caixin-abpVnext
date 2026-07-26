@@ -1,7 +1,4 @@
-﻿using CaiXin.Domain.Shared.Response;
-using FluentValidation;
-using System.ComponentModel.DataAnnotations;
-using Volo.Abp.Validation;
+﻿using FluentValidation;
 
 namespace CaiXin.NiuMa.Domain.Employees.Validations
 {
@@ -30,45 +27,6 @@ namespace CaiXin.NiuMa.Domain.Employees.Validations
 
             //RuleFor(x => x.Status)
             //    .IsInEnum().WithMessage("员工状态无效");
-        }
-    }
-
-    public static class EmployeeValidationExtensions
-    {
-        private static readonly IValidator<EmployeeAgg> Validator = new CreateEmployeeValidator();
-
-        public static void Validate(this EmployeeAgg employee)
-        {
-            var result = Validator.Validate(employee);
-            if (!result.IsValid)
-            {
-                // 构建详细的验证错误信息
-                var validationErrors = result.Errors.Select(e => new ValidationErrorDetail
-                {
-                    Property = e.PropertyName,
-                    Message = e.ErrorMessage,
-                    ErrorCode = e.ErrorCode ?? "ValidationError",
-                    AttemptedValue = e.AttemptedValue,
-                    Severity = e.Severity.ToString()
-                }).ToList();
-
-                // ✅ 使用 System.ComponentModel.DataAnnotations.ValidationResult
-                var validationResults = result.Errors.Select(e =>
-                    new ValidationResult(e.ErrorMessage, new[] { e.PropertyName })
-                ).ToList();
-
-                // 创建 AbpValidationException
-                var exception = new AbpValidationException(
-                    message: "Employee validation failed",
-                    validationErrors: validationResults
-                );
-
-                // 将详细错误信息附加到 Data（供过滤器使用）
-                exception.Data["ValidationErrors"] = validationErrors;
-                exception.Data["ErrorCount"] = validationErrors.Count;
-
-                throw exception;
-            }
         }
     }
 }

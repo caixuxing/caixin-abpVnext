@@ -2,6 +2,9 @@
 using CaiXin.NiuMa.Domain.Employees.EventDto;
 using CaiXin.NiuMa.Domain.Employees.Validations;
 using CaiXin.NiuMa.Domain.Member.ValueObjects;
+using CaiXin.NiuMa.Domain.Shared.Validations;
+using FluentValidation;
+using Volo.Abp;
 using Volo.Abp.Auditing;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.MultiTenancy;
@@ -78,12 +81,13 @@ public partial class EmployeeAgg : AggregateRoot<Guid>, IFullAuditedObject<strin
     private EmployeeAgg()
     {
     }
-
-
 }
 
 public partial class EmployeeAgg
 {
+
+    private static readonly IValidator<EmployeeAgg> validator = new CreateEmployeeValidator();
+
     /// <summary>
     /// 创建员工
     /// </summary>
@@ -110,7 +114,7 @@ public partial class EmployeeAgg
             Status = 1,
             SysUser = SysUser.Create(id, employeeNumber, Password, Salt)
         };
-        employee.Validate();
+        employee.Validate(validator);
         employee.AddLocalEvent(new CreateEmployeeEto { Id = employee.Id, EmployeeNumber = employeeNumber, FullName = fullName });
         return employee;
     }
@@ -120,9 +124,8 @@ public partial class EmployeeAgg
     /// </summary>
     public void Resign(DateTime resignationDate)
     {
-        if (Status == 2) throw new InvalidOperationException("员工已经离职");
+        if (Status == 2) throw new BusinessException("员工已经离职");
         Status = 2;
         SysUser?.Deactivate();
     }
 }
-

@@ -12,7 +12,7 @@ namespace CaiXin.Domain.Shared.Response
         public ValidationErrorResponse()
         {
             Errors = new List<ValidationErrorDetail>();
-            Summary = "Validation failed for one or more fields";
+            Summary = "参数校验失败";
         }
     }
 
